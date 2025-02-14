@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.Controller">
+   <children>
+      <Button id="save_button" fx:id="save_button" layoutX="31.0" layoutY="192.0" mnemonicParsing="false" onAction="#save_buttonOnClick" prefHeight="46.0" prefWidth="100.0" text="Сохранить" />
+      <TextField layoutX="31.0" layoutY="130.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите значение поля для абонента" />
+      <ComboBox fx:id="sub_combobox" layoutX="31.0" layoutY="79.0" prefHeight="26.0" prefWidth="190.0" promptText="Выберите поле абонента">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ComboBox>
+      <TableView fx:id="sub_table" layoutX="325.0" layoutY="79.0" prefHeight="418.0" prefWidth="474.0">
+        <columns>
+          <TableColumn prefWidth="142.39996337890625" text="ФИО" />
+          <TableColumn minWidth="8.800048828125" prefWidth="61.5999755859375" text="Номер " />
+            <TableColumn prefWidth="91.20001220703125" text="Тариф" />
+            <TableColumn prefWidth="78.39996337890625" text="Баланс" />
+            <TableColumn prefWidth="99.20004882812498" text="Лиц. Счёт" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
