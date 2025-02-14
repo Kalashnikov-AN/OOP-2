@@ -17,6 +17,11 @@ public class tel_sub {
     private String name;
 
     private final List<String> tariffs = Arrays.asList("Based", "Medium", "Advanced", "Pro", "Budget", "Super-Tariff", "Mega-Tariff");
+
+    public double getBalance() {
+        return balance;
+    }
+
     // баланс абонента
     public double balance;
     tel_sub(){

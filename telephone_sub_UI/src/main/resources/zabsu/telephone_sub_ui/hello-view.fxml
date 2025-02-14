@@ -19,11 +19,11 @@
       </ComboBox>
       <TableView fx:id="sub_table" layoutX="325.0" layoutY="79.0" prefHeight="418.0" prefWidth="474.0">
         <columns>
-          <TableColumn prefWidth="142.39996337890625" text="ФИО" />
-          <TableColumn minWidth="8.800048828125" prefWidth="61.5999755859375" text="Номер " />
-            <TableColumn prefWidth="91.20001220703125" text="Тариф" />
-            <TableColumn prefWidth="78.39996337890625" text="Баланс" />
-            <TableColumn prefWidth="99.20004882812498" text="Лиц. Счёт" />
+          <TableColumn fx:id="table_name" prefWidth="142.39996337890625" text="ФИО" />
+          <TableColumn fx:id="table_pn" minWidth="8.800048828125" prefWidth="61.5999755859375" text="Номер " />
+            <TableColumn fx:id="table_tariff" prefWidth="91.20001220703125" text="Тариф" />
+            <TableColumn fx:id="table_balance" prefWidth="78.39996337890625" text="Баланс" />
+            <TableColumn fx:id="table_an" prefWidth="99.20004882812498" text="Лиц. Счёт" />
         </columns>
       </TableView>
    </children>
