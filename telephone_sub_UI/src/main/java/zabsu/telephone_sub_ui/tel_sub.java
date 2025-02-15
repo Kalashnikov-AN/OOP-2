@@ -1,9 +1,11 @@
 package zabsu.telephone_sub_ui;
 
+import zabsu.telephone_sub_ui.Controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.control.TextField;
 
 public class tel_sub {
     // поля класса:
@@ -31,19 +33,27 @@ public class tel_sub {
         tariff = "Based";
         name = "Name Surname";
     }
-    tel_sub(final String pn, final String an, final String tariff1, final String name1, final double balance1) {
-        balance = balance1;
-        setName(name1);
-        setTariff(tariff1);
-        setAccount_number(an);
-        setPhone_number(pn);
+    tel_sub(final String pn, final String an, final String tariff1, final String name1, final double balance1,
+            TextField text_pn, TextField text_an, TextField text_name, TextField text_tariff, TextField text_balance) {
+      //  try {
+            balance = balance1;
+            setName(name1);
+            setTariff(tariff1);
+            setAccount_number(an);
+            setPhone_number(pn);
+       // }
+        //catch(Exception ex){
+           // text_pn.setStyle("-fx-prompt-text-fill: red;");
+          //  text_pn.setPromptText("Ошибка: неверное число");
+
+       // }
     }
 
     public String getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(String pn) {
+    public void setPhone_number(String pn/*, TextField text_pn*/) throws RuntimeException {
         Pattern pattern = Pattern.compile("\\+([0-9]{1})(\\([0-9]{3}\\))([0-9\\-]{9})"); // маска номера телефона
         Matcher matcher = pattern.matcher(pn); // создаем matcher для проверки соответствия
 
@@ -51,7 +61,10 @@ public class tel_sub {
             phone_number = pn;
         } else {
             phone_number = "+8(924)000-00-00";
-            System.err.println("Ошибка: неверно введён номер телефона. Придерживайтесь формата +.(...)...-..-..");
+            throw new RuntimeException("Придерживайтесь формата +.(...)...-..-..");
+            //System.err.println("Ошибка: неверно введён номер телефона. Придерживайтесь формата +.(...)...-..-..");
+            //text_pn.setStyle("-fx-prompt-text-fill: red;");
+            //text_pn.setPromptText("Ошибка: неверное число");
         }
     }
 
@@ -59,7 +72,7 @@ public class tel_sub {
         return account_number;
     }
 
-    public void setAccount_number(String an) {
+    public void setAccount_number(String an) throws RuntimeException {
         Pattern pattern = Pattern.compile("([0-9]{6})");
         Matcher matcher = pattern.matcher(an);
         if (matcher.matches()){
@@ -67,7 +80,7 @@ public class tel_sub {
         }
         else {
             account_number = "000001";
-            System.err.println("Ошибка: неверно введён лицевой счёт. Придерживайтесь  шестизначного числового формата ");
+            throw new RuntimeException("Придерживайтесь  шестизначного числового формата ");
         }
     }
 
@@ -75,13 +88,13 @@ public class tel_sub {
         return tariff;
     }
 
-    public void setTariff(String tariff1) {
+    public void setTariff(String tariff1) throws RuntimeException {
         // если введённый тариф присутствует в списке тарифов
         if (tariffs.contains(tariff1)) {
             this.tariff = tariff1;
         } else {
             this.tariff = "Based";
-            System.err.println("Ошибка: неверно введён тариф. Выберите тариф из списка тарифов");
+            throw new RuntimeException("Выберите тариф из списка тарифов");
         }
     }
 
@@ -89,7 +102,7 @@ public class tel_sub {
         return name;
     }
 
-    public void setName(String name1) {
+    public void setName(String name1) throws RuntimeException {
         // Используем регулярное выражение для проверки, состоит ли строка только из букв и пробелов
         Pattern pattern = Pattern.compile("[a-zA-Z\\s]+");
         Matcher matcher = pattern.matcher(name1);
@@ -99,14 +112,14 @@ public class tel_sub {
             this.name = name1;
         } else {
             this.name = "Name Surname";
-            System.err.println("Ошибка: неверно введено ФИО");
+            throw new RuntimeException("Ошибка: неверно введено ФИО");
         }
     }
-    public void replenish_balance(final double balance){
+    public void replenish_balance(final double balance) throws RuntimeException {
         if (balance > 0) {
             this.balance += balance;
         } else {
-            System.err.println("Ошибка: неверно введена сумма пополнения баланса");
+            throw new RuntimeException("Ошибка: неверно введена сумма пополнения баланса");
         }
     }
 }
