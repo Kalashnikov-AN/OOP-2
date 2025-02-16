@@ -33,8 +33,7 @@ public class tel_sub {
         tariff = "Based";
         name = "Name Surname";
     }
-    tel_sub(final String pn, final String an, final String tariff1, final String name1, final double balance1,
-            TextField text_pn, TextField text_an, TextField text_name, TextField text_tariff, TextField text_balance) {
+    tel_sub(final String pn, final String an, final String tariff1, final String name1, final double balance1) {
       //  try {
             balance = balance1;
             setName(name1);
@@ -80,7 +79,7 @@ public class tel_sub {
         }
         else {
             account_number = "000001";
-            throw new RuntimeException("Придерживайтесь  шестизначного числового формата ");
+            throw new RuntimeException("Придерживайтесь  шестизначного числового формата");
         }
     }
 

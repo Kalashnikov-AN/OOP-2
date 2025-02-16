@@ -51,8 +51,7 @@ public class Controller {
     @FXML
     void save_buttonOnClick(ActionEvent event){
         try{
-    tel_sub sub = new tel_sub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()),
-            text_pn, text_an, text_name, text_tariff, text_balance);
+    tel_sub sub = new tel_sub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
 
             sub_table.getItems().add(sub); }
         catch(RuntimeException ex){
@@ -61,6 +60,26 @@ public class Controller {
                 text_pn.clear();
                 text_pn.setStyle("-fx-prompt-text-fill: red;");
                 text_pn.setPromptText(ex.getMessage());
+            }
+            if(ex.getMessage().equals("Придерживайтесь  шестизначного числового формата")) {
+                text_an.clear();
+                text_an.setStyle("-fx-prompt-text-fill: red;");
+                text_an.setPromptText(ex.getMessage());
+            }
+            if(ex.getMessage().equals("Выберите тариф из списка тарифов")) {
+                text_tariff.clear();
+                text_tariff.setStyle("-fx-prompt-text-fill: red;");
+                text_tariff.setPromptText(ex.getMessage());
+            }
+            if(ex.getMessage().equals("Ошибка: неверно введено ФИО")) {
+                text_name.clear();
+                text_name.setStyle("-fx-prompt-text-fill: red;");
+                text_name.setPromptText(ex.getMessage());
+            }
+            if(ex.getMessage().equals("Ошибка: неверно введена сумма пополнения баланса")) {
+                text_balance.clear();
+                text_balance.setStyle("-fx-prompt-text-fill: red;");
+                text_balance.setPromptText(ex.getMessage());
             }
         }
 
