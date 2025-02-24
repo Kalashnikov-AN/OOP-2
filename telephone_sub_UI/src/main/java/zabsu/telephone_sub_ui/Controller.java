@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
-
+/// Класс-контроллер
 public class Controller {
 
     @FXML
@@ -67,28 +67,34 @@ public class Controller {
     TelSub sub = new TelSub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
             // Добавляем объект в таблицу
             sub_table.getItems().add(sub); }
+        // Обрабатываем исключительные ситуации
         catch(RuntimeException ex){
             System.err.println(ex.getMessage());
+            // Если неправильно введён номер телефона
             if(ex.getMessage().equals("Придерживайтесь формата +.(...)...-..-..")) {
                 text_pn.clear();
                 text_pn.setStyle("-fx-prompt-text-fill: red;");
                 text_pn.setPromptText(ex.getMessage());
             }
+            // Если неправильно введён лицевой счёт
             if(ex.getMessage().equals("Придерживайтесь  шестизначного числового формата")) {
                 text_an.clear();
                 text_an.setStyle("-fx-prompt-text-fill: red;");
                 text_an.setPromptText(ex.getMessage());
             }
+            // Если неправильно введён тариф
             if(ex.getMessage().equals("Выберите тариф из списка тарифов")) {
                 text_tariff.clear();
                 text_tariff.setStyle("-fx-prompt-text-fill: red;");
                 text_tariff.setPromptText(ex.getMessage());
             }
+            // Если неправильно введено ФИО
             if(ex.getMessage().equals("Ошибка: неверно введено ФИО")) {
                 text_name.clear();
                 text_name.setStyle("-fx-prompt-text-fill: red;");
                 text_name.setPromptText(ex.getMessage());
             }
+            // Если неправильно введён баланс
             if(ex.getMessage().equals("Ошибка: неверно введена сумма пополнения баланса")) {
                 text_balance.clear();
                 text_balance.setStyle("-fx-prompt-text-fill: red;");
