@@ -1,14 +1,13 @@
 // Автор: Калашников А.Н.
 
 package zabsu.telephone_sub_ui;
-import zabsu.telephone_sub_ui.Controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.control.TextField;
+
 /// Класс телефонного абонента
-public class tel_sub {
+public class TelSub {
     // поля класса:
     // номер телефона абонента
     private String phone_number;
@@ -19,7 +18,7 @@ public class tel_sub {
     // имя абонента
     private String name;
     // Список тарифов
-    private final List<String> tariffs = Arrays.asList("Based", "Medium", "Advanced", "Pro", "Budget", "Super-Tariff", "Mega-Tariff");
+    private final static List<String> tariffs = Arrays.asList("Based", "Medium", "Advanced", "Pro", "Budget", "Super-Tariff", "Mega-Tariff");
     /// Возвращает баланс абонента balance
     public double getBalance() {
         return balance;
@@ -29,7 +28,7 @@ public class tel_sub {
     public double balance;
 
     /// Конструктор по умолчанию
-    tel_sub(){
+    TelSub(){
         balance = 0;
         phone_number = "+8(924)000-00-00";
         account_number = "000001";
@@ -37,7 +36,7 @@ public class tel_sub {
         name = "Name Surname";
     }
     /// Конструктор с параметрами: pn - номер телефона, an - номер лицевого счёта, tariff1 - тариф, name1 - имя, balance1 - баланс
-    tel_sub(final String pn, final String an, final String tariff1, final String name1, final double balance1) {
+    TelSub(final String pn, final String an, final String tariff1, final String name1, final double balance1) {
             balance = balance1;
             setName(name1);
             setTariff(tariff1);
@@ -124,6 +123,13 @@ public class tel_sub {
         } else {
             throw new RuntimeException("Ошибка: неверно введена сумма пополнения баланса");
         }
+    }
+
+    /// Возвращает строку из всех полей объекта класса TelSub
+    public String to_string() {
+        String s;
+        s = phone_number + ' ' + account_number + ' ' + tariff + ' ' + name + ' ' + String.valueOf(balance) + '\n';
+        return s;
     }
 }
 

@@ -1,8 +1,6 @@
 // Автор: Калашников А.Н.
 
 package zabsu.telephone_sub_ui;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,27 +17,27 @@ public class Controller {
 
     @FXML
     /// Таблица с записями телефонных абонентов
-    private TableView<tel_sub> sub_table;
+    private TableView<TelSub> sub_table;
 
     @FXML
     /// Столбец - лицевой счёт
-    private TableColumn<tel_sub, String> table_an;
+    private TableColumn<TelSub, String> table_an;
 
     @FXML
     /// Столбец - баланс
-    private TableColumn<tel_sub, Double> table_balance;
+    private TableColumn<TelSub, Double> table_balance;
 
     @FXML
     /// Столбец - ФИО
-    private TableColumn<tel_sub, String> table_name;
+    private TableColumn<TelSub, String> table_name;
 
     @FXML
     /// Столбец - номер телефона
-    private TableColumn<tel_sub, String> table_pn;
+    private TableColumn<TelSub, String> table_pn;
 
     @FXML
     /// Столбец - тариф абонента
-    private TableColumn<tel_sub, String> table_tariff;
+    private TableColumn<TelSub, String> table_tariff;
 
     @FXML
     /// Поле для ввода лицевого счёта
@@ -66,7 +64,7 @@ public class Controller {
     void save_buttonOnClick(ActionEvent event){
         try{
             // Создаём объект телефонного абонента через конструктор с параметрами
-    tel_sub sub = new tel_sub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
+    TelSub sub = new TelSub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
             // Добавляем объект в таблицу
             sub_table.getItems().add(sub); }
         catch(RuntimeException ex){
@@ -103,11 +101,11 @@ public class Controller {
     @FXML
     void initialize() {
         // Связываем столбцы таблицы с соответствующими полями класса
-        table_name.setCellValueFactory(new PropertyValueFactory<tel_sub, String>("name"));
-        table_pn.setCellValueFactory(new PropertyValueFactory<tel_sub, String>("phone_number"));
-        table_an.setCellValueFactory(new PropertyValueFactory<tel_sub, String>("account_number"));
-        table_tariff.setCellValueFactory(new PropertyValueFactory<tel_sub, String>("tariff"));
-        table_balance.setCellValueFactory(new PropertyValueFactory<tel_sub, Double>("balance"));
+        table_name.setCellValueFactory(new PropertyValueFactory<TelSub, String>("name"));
+        table_pn.setCellValueFactory(new PropertyValueFactory<TelSub, String>("phone_number"));
+        table_an.setCellValueFactory(new PropertyValueFactory<TelSub, String>("account_number"));
+        table_tariff.setCellValueFactory(new PropertyValueFactory<TelSub, String>("tariff"));
+        table_balance.setCellValueFactory(new PropertyValueFactory<TelSub, Double>("balance"));
 
     }
 
