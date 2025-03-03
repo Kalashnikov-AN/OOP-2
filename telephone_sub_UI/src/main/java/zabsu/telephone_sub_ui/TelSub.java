@@ -125,11 +125,11 @@ public class TelSub {
         }
     }
 
-    /// Возвращает строку из всех полей объекта класса TelSub
-    public String to_string() {
-        String s;
-        s = phone_number + ' ' + account_number + ' ' + tariff + ' ' + name + ' ' + String.valueOf(balance) + '\n';
-        return s;
+    /// Возвращает строку из всех полей объекта класса TelSub, переопределяет метод toString() стандартного класса Object
+    @Override
+    public String toString() {
+        return phone_number + " " + account_number + " " + tariff + " " + name + " " + balance;
     }
+
 }
 

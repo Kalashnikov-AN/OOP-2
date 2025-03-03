@@ -104,6 +104,7 @@ public class Controller {
 
     }
 
+
     @FXML
     void initialize() {
         // Связываем столбцы таблицы с соответствующими полями класса

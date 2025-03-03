@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+/* Классы в Java - ссылочный тип данных.
+Ссылочные типы данных в Java не содержат значения, а ссылаются на место, где они расположены. */
 /// Класс приложения TelSubApplication
 public class TelSubApplication extends Application {
     @Override
