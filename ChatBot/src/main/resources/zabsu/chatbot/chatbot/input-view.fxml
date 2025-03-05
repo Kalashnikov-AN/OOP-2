@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.chatbot.chatbot.HelloController">
    <children>
-      <TextField layoutX="145.0" layoutY="128.0" prefHeight="26.0" prefWidth="288.0" />
+      <TextField fx:id="textfield_name" layoutX="145.0" layoutY="128.0" prefHeight="26.0" prefWidth="288.0" />
       <Text layoutX="258.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Чат-Бот" wrappingWidth="63.2698974609375">
          <font>
             <Font size="14.0" />
