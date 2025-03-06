@@ -6,22 +6,25 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class HelloController {
+public class InputController {
 
-    private static String name;
+    public static String name;
 
     @FXML
     public TextField textfield_name;
+
 
     @FXML
     private ResourceBundle resources;
@@ -30,20 +33,11 @@ public class HelloController {
     private URL location;
 
     @FXML
-    private TextArea messages;
-
-    @FXML
-    private Button send;
-
-    @FXML
     private TextField text;
 
-    @FXML
-    void onSendClick(ActionEvent event) {
 
-    }
     @FXML
-    public static Button enter_button;
+    public Button enter_button;
 
     /// Изменяет поле имени абонента на имя name1
     public void setName(String name1) throws RuntimeException {
@@ -62,12 +56,22 @@ public class HelloController {
 
     @FXML
     void enter_buttonOnClick(ActionEvent event) throws IOException  {
-        setName(textfield_name.getText());
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
-        stage.setScene(scene);
-        stage.show();
+        try{
+            setName(textfield_name.getText());
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ChatBotApplication.class.getResource("chat-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
+            stage.setScene(scene);
+            stage.show();
+         }
+        catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText(e.getMessage());
+            errorAlert.setContentText("Имя должно состоять только из букв и символа пробел");
+            errorAlert.showAndWait();
+        }
+
    }
 
 
