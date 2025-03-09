@@ -11,7 +11,7 @@ public class ChatBotApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ChatBotApplication.class.getResource("input-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
-        stage.setTitle("Hello!");
+        stage.setTitle("ChatBot");
         stage.setScene(scene);
         stage.show();
 

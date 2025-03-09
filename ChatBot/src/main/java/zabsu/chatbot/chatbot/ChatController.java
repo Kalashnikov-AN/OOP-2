@@ -1,5 +1,6 @@
 package zabsu.chatbot.chatbot;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,10 +14,15 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ChatController {
+
+    private static final String HISTORY_FILE = "chat_history.txt";
 
     @FXML
     public ListView chatListView;
@@ -62,7 +68,8 @@ public class ChatController {
         // Инициализируем список сообщений
         messages = FXCollections.observableArrayList();
         chatListView.setItems(messages);
-
+        // Загружаем историю сообщений
+        loadChatHistory();
         // Настраиваем кастомный cell factory для отображения сообщений
         chatListView.setCellFactory(listView -> new ListCell<Message>() {
             @Override
@@ -72,10 +79,6 @@ public class ChatController {
                     setText(null);
                     setGraphic(null);
                 } else {
-//                    // Создаем Label для текста сообщения
-//                    Label messageLabel = new Label(message.getTime() + " " + message.getSender() + ": " + message.getContent());
-//                    // Оборачиваем в HBox для возможности выравнивания
-//                    HBox messageBox = new HBox(messageLabel);
                     // Создаем текст для времени и устанавливаем жирное начертание
                     Text timeText = new Text(message.getTime() + " ");
                     timeText.setStyle("-fx-font-weight: bold;");
@@ -97,14 +100,10 @@ public class ChatController {
                     // Оборачиваем TextFlow в HBox для возможности выравнивания по левому/правому краю
                     HBox messageBox = new HBox(textFlow);
 
-                    // Ограничиваем ширину HBox до 70% от ширины ListView
-                    //messageBox.maxWidthProperty().bind(chatListView.widthProperty().multiply(0.7));
-
                     // Если сообщение от пользователя, выравниваем вправо, иначе – влево
                     if (InputController.name.equalsIgnoreCase(message.getSender())) {
-                       // textFlow.setTextAlignment(TextAlignment.RIGHT);
-                        //messageBox.setAlignment(Pos.CENTER_RIGHT);
                         messageBox.setPadding(new Insets(0, 0, 0, 210)); // Отступы сверху, справа, снизу и слева соответственно
+
                         // Можно добавить стиль через CSS для сообщений пользователя
                         //messageLabel.getStyleClass().add("user-message");
                     } else {
@@ -128,5 +127,37 @@ public class ChatController {
         // Пример начального сообщения от бота
         messages.add(new Message("Bot", "Привет, " + InputController.name + "! Я чат-бот. Как я могу помочь?", formattedNow));
 
+        // Автосохранение при выходе
+        Platform.runLater(() -> {
+            chatListView.getScene().getWindow().setOnCloseRequest(event -> saveChatHistory());
+        });
     }
+
+    private void saveChatHistory() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(HISTORY_FILE))) {
+            for (Message message : messages) {
+                writer.write(message.getTime() + ";" + message.getSender() + ";" + message.getContent());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // выводит стек ошибки в стандартный системный поток для ошибок
+        }
+    }
+
+    private void loadChatHistory() {
+        if (Files.exists(Paths.get(HISTORY_FILE))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(HISTORY_FILE))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(";", 3);
+                    if (parts.length == 3) {
+                        messages.add(new Message(parts[1], parts[2], parts[0]));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace(); // выводит стек ошибки в стандартный системный поток для ошибок
+            }
+        }
+    }
+
 }
