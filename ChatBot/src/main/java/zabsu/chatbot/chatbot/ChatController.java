@@ -33,7 +33,7 @@ public class ChatController {
     @FXML
     public TextField textfieldInput;
 
-    private ObservableList<Message> messages;
+    private ObservableList<Message> messages; //todo: хранить в классе для обработки сообщений
 
     @FXML
     void onSendClick(ActionEvent event) {

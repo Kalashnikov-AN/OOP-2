@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 public class InputController {
 
-    public static String name;
+    public static String name; //todo: private НЕ static, передавать в ChatController.SetName; InputController.GetController
 
     @FXML
     public TextField textfield_name;
@@ -61,6 +61,8 @@ public class InputController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ChatBotApplication.class.getResource("chat-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
+            //
+             //
             stage.setScene(scene);
             stage.show();
          }
