@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 public class InputController {
 
-    public static String name; //todo: private НЕ static, передавать в ChatController.SetName; InputController.GetController
+   // private String name; //todo: private НЕ static, передавать в ChatController.SetName; InputController.GetController
 
     @FXML
     public TextField textfield_name;
@@ -40,16 +40,15 @@ public class InputController {
     public Button enter_button;
 
     /// Изменяет поле имени абонента на имя name1
-    public void setName(String name1) throws RuntimeException {
+    public String setName(String name1) throws RuntimeException {
         // Используем регулярное выражение для проверки, состоит ли строка только из букв и пробелов
         Pattern pattern = Pattern.compile("[a-zA-Z\\s]+");
         Matcher matcher = pattern.matcher(name1);
         boolean isNameValid = matcher.matches();
-
         if (isNameValid) {
-            name = name1;
+            return name1;
         } else {
-            name = "Name Surname";
+            name1 = "Name Surname";
             throw new RuntimeException("Ошибка: неверно введено ФИО");
         }
     }
@@ -57,12 +56,13 @@ public class InputController {
     @FXML
     void enter_buttonOnClick(ActionEvent event) throws IOException  {
         try{
-            setName(textfield_name.getText());
+            String inputName = setName(textfield_name.getText());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ChatBotApplication.class.getResource("chat-view.fxml"));
+            ChatController chatController = new ChatController();
+            chatController.name = inputName; // Устанавливаем имя заранее
+            fxmlLoader.setController(chatController);
             Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
-            //
-             //
             stage.setScene(scene);
             stage.show();
          }

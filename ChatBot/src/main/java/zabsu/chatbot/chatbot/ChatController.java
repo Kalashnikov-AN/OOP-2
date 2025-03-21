@@ -19,10 +19,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChatController {
 
     private static final String HISTORY_FILE = "chat_history.txt";
+
+    public String name;
 
     @FXML
     public ListView chatListView;
@@ -33,7 +37,8 @@ public class ChatController {
     @FXML
     public TextField textfieldInput;
 
-    private ObservableList<Message> messages; //todo: хранить в классе для обработки сообщений
+    private ObservableList<Message> messages; //todo: хранить в классе для обработки сообщений, коммент про то как паботает массив совместно с listview
+
 
     @FXML
     void onSendClick(ActionEvent event) {
@@ -50,7 +55,7 @@ public class ChatController {
             String formattedNow = now.format(formatter);
 
             // Добавляем сообщение пользователя
-            messages.add(new Message(InputController.name, text, formattedNow));
+            messages.add(new Message(name, text, formattedNow));
             textfieldInput.clear();
 
             // Преобразовать дату и время
@@ -101,7 +106,7 @@ public class ChatController {
                     HBox messageBox = new HBox(textFlow);
 
                     // Если сообщение от пользователя, выравниваем вправо, иначе – влево
-                    if (InputController.name.equalsIgnoreCase(message.getSender())) {
+                    if (name.equalsIgnoreCase(message.getSender())) {
                         messageBox.setPadding(new Insets(0, 0, 0, 210)); // Отступы сверху, справа, снизу и слева соответственно
 
                         // Можно добавить стиль через CSS для сообщений пользователя
@@ -125,7 +130,7 @@ public class ChatController {
         String formattedNow = now.format(formatter);
 
         // Пример начального сообщения от бота
-        messages.add(new Message("Bot", "Привет, " + InputController.name + "! Я чат-бот. Как я могу помочь?", formattedNow));
+        messages.add(new Message("Bot", "Привет, " + name + "! Я чат-бот. Как я могу помочь?", formattedNow));
 
         // Автосохранение при выходе
         Platform.runLater(() -> {
