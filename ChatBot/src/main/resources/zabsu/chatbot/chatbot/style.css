@@ -1,0 +1,6 @@
+.root {
+    -fx-font-family: 'Verdana';
+    -fx-font-size: 14px;
+    -fx-background-color:
+rgb(67, 189, 179) #43bdb3; /* светло-серый фон */
+}

@@ -39,6 +39,7 @@ public class ChatController {
 
     private ObservableList<Message> messages; //todo: хранить в классе для обработки сообщений, коммент про то как паботает массив совместно с listview
 
+    private ImsgProcessing bot; // Добавляем поле для бота
 
     @FXML
     void onSendClick(ActionEvent event) {
@@ -60,8 +61,8 @@ public class ChatController {
 
             // Преобразовать дату и время
             formattedNow = now.format(formatter);
-
-            messages.add(new Message("Bot", "Вы сказали: " + text, formattedNow));
+            System.out.println(text);
+            messages.add(new Message("Bot", bot.answer(text), formattedNow));
 
             // Прокручиваем ListView вниз к последнему сообщению
             chatListView.scrollTo(messages.size() - 1);
@@ -70,6 +71,7 @@ public class ChatController {
 
     @FXML
     void initialize() {
+        bot = new msgProcessing();
         // Инициализируем список сообщений
         messages = FXCollections.observableArrayList();
         chatListView.setItems(messages);

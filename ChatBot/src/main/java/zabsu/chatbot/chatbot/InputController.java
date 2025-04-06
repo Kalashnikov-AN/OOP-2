@@ -63,6 +63,7 @@ public class InputController {
             chatController.name = inputName; // Устанавливаем имя заранее
             fxmlLoader.setController(chatController);
             Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
+            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
          }

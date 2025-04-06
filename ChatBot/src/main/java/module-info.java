@@ -1,7 +1,7 @@
 module zabsu.chatbot.chatbot {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.xml;
+    requires com.fasterxml.jackson.databind;
 
 
     opens zabsu.chatbot.chatbot to javafx.fxml;
