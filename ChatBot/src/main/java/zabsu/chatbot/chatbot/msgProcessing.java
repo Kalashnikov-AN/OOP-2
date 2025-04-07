@@ -9,9 +9,9 @@ public class msgProcessing implements  ImsgProcessing {
 
     public msgProcessing(){
         ans.add(new TextAnswer(List.of("Привет", "Hello"), Pattern.compile("hi|hello|привет|здравствуйте")));
-        ans.add(new TextAnswer(List.of("Я чат-бот помощник!"), Pattern.compile("кто\\s.*ты|ты\\s.*кто|как\\s.*зовут|как\\s.*имя")));
+        ans.add(new TextAnswer(List.of("Я чат-бот помощник!"), Pattern.compile(".*кто\\s.*ты.*|.*ты\\s.*кто.*|.*как\\s.*зовут.*|.*как\\s.*имя.*")));
         ans.add(new TextAnswer(List.of("До свидания!", "Пока!", "До новых встреч!"), Pattern.compile(".*до свидания|.*пока")));
-        ans.add(new TextAnswer(List.of(new Date().toString()), Pattern.compile("который\\s.*час|сколько\\s.*время")));
+        ans.add(new TextAnswer(List.of(new Date().toString()), Pattern.compile(".*который\\s.*час.*|.*сколько\\s.*врем.*")));
         ans.add(new MathAnswer());
         ans.add(new HTTPAnswer());
     }

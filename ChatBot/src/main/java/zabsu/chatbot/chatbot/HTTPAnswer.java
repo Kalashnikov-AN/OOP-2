@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.net.URL;
 
 public class HTTPAnswer implements IAnswer{
-    public Pattern reg = Pattern.compile("http");
+    public Pattern reg = Pattern.compile(".*курс.*|.*валют.*");
     @Override
     public boolean is_matched(String s) {
         return reg.matcher(s).matches();
