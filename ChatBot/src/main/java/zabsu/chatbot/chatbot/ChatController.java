@@ -22,25 +22,57 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static zabsu.chatbot.chatbot.msgProcessing.messages;
+
+/**
+ * Контроллер главного экрана чат-бота.
+ * <p>
+ * Этот класс отвечает за:
+ * <ul>
+ *   <li>Обработку событий отправки сообщений,</li>
+ *   <li>Отображение сообщений в ListView с кастомным оформлением,</li>
+ *   <li>Загрузку и сохранение истории сообщений,</li>
+ *   <li>Инициализацию бота для обработки входящих сообщений.</li>
+ * </ul>
+ * </p>
+ */
 public class ChatController {
 
+    /** Путь к файлу истории сообщений */
     private static final String HISTORY_FILE = "chat_history.txt";
 
+    /** Имя пользователя, передаваемое из экрана ввода */
     public String name;
 
+    /** ListView для отображения сообщений */
     @FXML
     public ListView chatListView;
 
+    /** Кнопка отправки сообщения */
     @FXML
     public Button sendButton;
 
+    /** Текстовое поле для ввода сообщения */
     @FXML
     public TextField textfieldInput;
 
-    private ObservableList<Message> messages; //todo: хранить в классе для обработки сообщений, коммент про то как паботает массив совместно с listview
-
+    /** Объект для обработки входящих сообщений (бот) */
     private ImsgProcessing bot; // Добавляем поле для бота
 
+    /**
+     * Обработчик нажатия кнопки отправки сообщения.
+     * <p>
+     * Если поле с текстом не пустое, метод:
+     * <ol>
+     *   <li>Получает текущее время и форматирует его,</li>
+     *   <li>Добавляет сообщение пользователя в список,</li>
+     *   <li>Вызывает метод {@code bot.answer(text)} для получения ответа ботом,</li>
+     *   <li>Добавляет ответ бота в список и прокручивает ListView до последнего сообщения.</li>
+     * </ol>
+     * </p>
+     *
+     * @param event событие, вызванное нажатием на кнопку отправки
+     */
     @FXML
     void onSendClick(ActionEvent event) {
 
@@ -57,11 +89,13 @@ public class ChatController {
 
             // Добавляем сообщение пользователя
             messages.add(new Message(name, text, formattedNow));
+            // Очищаем поле ввода текстового сообщения
             textfieldInput.clear();
 
             // Преобразовать дату и время
             formattedNow = now.format(formatter);
-            System.out.println(text);
+
+            // Добавляем новое сообщение в массив, хранящий сообщения
             messages.add(new Message("Bot", bot.answer(text), formattedNow));
 
             // Прокручиваем ListView вниз к последнему сообщению
@@ -69,8 +103,23 @@ public class ChatController {
         }
     }
 
+    /**
+     * Метод инициализации, вызываемый после загрузки FXML.
+     * <p>
+     * В данном методе:
+     * <ul>
+     *   <li>Инициализируется обработчик сообщений (бот),</li>
+     *   <li>Создаётся ObservableList для сообщений,</li>
+     *   <li>Настраивается отображение сообщений в ListView с кастомным cell factory,</li>
+     *   <li>Загружается история сообщений из файла,</li>
+     *   <li>Добавляется пример приветственного сообщения бота,</li>
+     *   <li>Настраивается автосохранение истории при закрытии окна.</li>
+     * </ul>
+     * </p>
+     */
     @FXML
     void initialize() {
+        // Инициализируем бота, который будет обрабатывать входящие сообщения
         bot = new msgProcessing();
         // Инициализируем список сообщений
         messages = FXCollections.observableArrayList();
@@ -111,13 +160,12 @@ public class ChatController {
                     if (name.equalsIgnoreCase(message.getSender())) {
                         messageBox.setPadding(new Insets(0, 0, 0, 210)); // Отступы сверху, справа, снизу и слева соответственно
 
-                        // Можно добавить стиль через CSS для сообщений пользователя
-                        //messageLabel.getStyleClass().add("user-message");
                     } else {
                         messageBox.setAlignment(Pos.CENTER_LEFT);
-                        //messageLabel.getStyleClass().add("bot-message");
                     }
                     setGraphic(messageBox);
+                    // Прокручиваем ListView вниз к последнему сообщению
+                    chatListView.scrollTo(messages.size() - 1);
                 }
             }
         });
@@ -140,6 +188,13 @@ public class ChatController {
         });
     }
 
+    /**
+     * Сохраняет историю сообщений в файл.
+     * <p>
+     * Проходит по всем сообщениям, формирует строку, где поля разделены символом «;»
+     * и записывает каждое сообщение в отдельной строке.
+     * </p>
+     */
     private void saveChatHistory() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(HISTORY_FILE))) {
             for (Message message : messages) {
@@ -151,6 +206,13 @@ public class ChatController {
         }
     }
 
+    /**
+     * Загружает историю сообщений из файла.
+     * <p>
+     * Если файл существует, каждая строка разбивается на три части (время, отправитель, текст)
+     * и каждое сообщение добавляется в ObservableList сообщений.
+     * </p>
+     */
     private void loadChatHistory() {
         if (Files.exists(Paths.get(HISTORY_FILE))) {
             try (BufferedReader reader = new BufferedReader(new FileReader(HISTORY_FILE))) {

@@ -14,7 +14,8 @@ public class ChatBotApplication extends Application {
         Image icon = new Image(getClass().getResourceAsStream("chatbot-icon.png"));
         stage.getIcons().add(icon);
         FXMLLoader fxmlLoader = new FXMLLoader(ChatBotApplication.class.getResource("input-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1024, 680);
+        Scene scene = new Scene(fxmlLoader.load(), 1024, 724);
+        // Подключаем css файл c шрифтом и цветом фона
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("ChatBot");
         stage.setScene(scene);

@@ -14,35 +14,61 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.net.URL;
 
+/**
+ * Класс HTTPAnswer реализует интерфейс {@link IAnswer} и отвечает за получение курсов валют
+ * с внешнего HTTP-сервера (в данном случае – с сайта Центрального банка России) и формирование ответа в виде строки.
+ * <p>
+ * Если входящее сообщение соответствует регулярному шаблону, связанному с курсом или валютами,
+ * метод {@code answer(String)} отправляет HTTP GET-запрос, получает JSON-ответ, парсит его,
+ * извлекает названия валют и их курсы, а затем возвращает их в виде форматированной строки.
+ * </p>
+ */
 public class HTTPAnswer implements IAnswer{
+    /**
+     * Регулярное выражение для определения, соответствует ли входящее сообщение запросу о курсах валют.
+     */
     public Pattern reg = Pattern.compile(".*курс.*|.*валют.*");
+
+    /**
+     * Определяет, удовлетворяет ли входящая строка шаблону для запроса курсов валют.
+     *
+     * @param s входящая строка сообщения
+     * @return {@code true}, если сообщение соответствует шаблону, иначе {@code false}
+     */
     @Override
     public boolean is_matched(String s) {
         return reg.matcher(s).matches();
     }
 
+    /**
+     * Обрабатывает входящее сообщение, делая HTTP-запрос для получения JSON с курсами валют,
+     * парсит полученный ответ и возвращает строку с названиями валют и их значениями.
+     * <p>
+     * Если возникает ошибка при запросе или парсинге, выводится сообщение об ошибке, и возвращается пустая строка.
+     * </p>
+     *
+     * @param s входящее сообщение (используется только для определения необходимости вызова данного метода)
+     * @return строка, содержащая названия валют и их курсы, или пустая строка в случае ошибки
+     */
     @Override
     public String answer(String s) {
         String result = "";
         try{
         URL url = new URL("https://www.cbr-xml-daily.ru/daily_json.js");
-// класс для отправки запросов к HTTP серверу
+        // класс для отправки запросов к HTTP серверу
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-// Тип запроса - GET (см. также POST)
+        // Тип запроса - GET
         con.setRequestMethod("GET");
 
-// Метаинформация ответа (response)
-        System.out.println("Connection Response Message : "+con.getResponseMessage());  // Текстовый статус
-        System.out.println("Connection Response Code :    "+con.getResponseCode());     // Код. Если всё ОК, то должен быть 200
-
-// Получение тела ответа - длительная процедура. Для чтения ответа используется класс BufferedReader,
-// который умеет читать потоковые данные
-// InputStreamReader конвертирует полученные данные в набор символов
+        // Получение тела ответа - длительная процедура. Для чтения ответа используется класс BufferedReader,
+        // который умеет читать потоковые данные
+        // InputStreamReader конвертирует полученные данные в набор символов
         BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
 
-// склеивание набора символов в строку
+        // склеивание набора символов в строку
         String output = br.lines().collect(Collectors.joining());
 
+            // Создание ObjectMapper для парсинга JSON
             ObjectMapper mapper = new ObjectMapper();
 
             // Преобразуем строку JSON в дерево JSON-объектов
@@ -56,15 +82,18 @@ public class HTTPAnswer implements IAnswer{
 
             while (fields.hasNext()) {
                 Map.Entry<String, JsonNode> entry = fields.next();
+                // Получаем объект, описывающий конкретную валюту
                 JsonNode currency = entry.getValue();
 
+                // Извлекаем название валюты
                 String name = currency.get("Name").asText();
+                // Извлекаем значение курса валюты
                 double value = currency.get("Value").asDouble();
                  result += (name + ": " + value + "\n");
-                System.out.println(name + ": " + value); }
+                 }
 
-        //System.out.println("Connection Response Body :    "+output);
-        con.disconnect();
+            // Закрываем соединение
+            con.disconnect();
         }
         catch (IOException e) {
             System.out.println(e);
