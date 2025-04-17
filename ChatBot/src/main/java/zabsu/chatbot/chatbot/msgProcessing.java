@@ -24,14 +24,15 @@ import java.util.regex.Pattern;
 public class msgProcessing implements  ImsgProcessing {
 
     /**
-     * Статический список сообщений, который может использоваться для хранения истории сообщений.
+     * Список сообщений, который может использоваться для хранения истории сообщений.
      * <p>
      * ListView из ChatController использует messages как источник данных.
      * </p>
      * Все изменения в messages (например, добавление новых сообщений) автоматически
      * отображаются в интерфейсе без необходимости вручную перерисовывать список.
      */
-    public static ObservableList<Message> messages;
+    public ObservableList<Message> messages;
+    //todo: не static
 
     /**
      * Список обработчиков ответов, реализующих интерфейс {@link IAnswer}.

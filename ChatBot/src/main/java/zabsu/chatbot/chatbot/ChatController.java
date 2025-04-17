@@ -22,7 +22,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static zabsu.chatbot.chatbot.msgProcessing.messages;
+import zabsu.chatbot.chatbot.files.*;
+//import zabsu.chatbot.chatbot.msgProcessing.messages;
 
 /**
  * Контроллер главного экрана чат-бота.
@@ -57,7 +58,7 @@ public class ChatController {
     public TextField textfieldInput;
 
     /** Объект для обработки входящих сообщений (бот) */
-    private ImsgProcessing bot; // Добавляем поле для бота
+    public msgProcessing bot; // Добавляем поле для бота
 
     /**
      * Обработчик нажатия кнопки отправки сообщения.
@@ -88,7 +89,7 @@ public class ChatController {
             String formattedNow = now.format(formatter);
 
             // Добавляем сообщение пользователя
-            messages.add(new Message(name, text, formattedNow));
+            bot.messages.add(new Message(name, text, formattedNow));
             // Очищаем поле ввода текстового сообщения
             textfieldInput.clear();
 
@@ -96,10 +97,11 @@ public class ChatController {
             formattedNow = now.format(formatter);
 
             // Добавляем новое сообщение в массив, хранящий сообщения
-            messages.add(new Message("Bot", bot.answer(text), formattedNow));
+            bot.messages.add(new Message("Bot", bot.answer(text), formattedNow));
+            //todo: перенести эту логику(messages.add) в msgProcessing, тогда здесь будет bot.messages.add
 
             // Прокручиваем ListView вниз к последнему сообщению
-            chatListView.scrollTo(messages.size() - 1);
+            chatListView.scrollTo(bot.messages.size() - 1);
         }
     }
 
@@ -122,10 +124,10 @@ public class ChatController {
         // Инициализируем бота, который будет обрабатывать входящие сообщения
         bot = new msgProcessing();
         // Инициализируем список сообщений
-        messages = FXCollections.observableArrayList();
-        chatListView.setItems(messages);
+        bot.messages = FXCollections.observableArrayList();
+        chatListView.setItems(bot.messages);
         // Загружаем историю сообщений
-        loadChatHistory();
+        files.loadChatHistory(bot.messages);
         // Настраиваем кастомный cell factory для отображения сообщений
         chatListView.setCellFactory(listView -> new ListCell<Message>() {
             @Override
@@ -165,7 +167,7 @@ public class ChatController {
                     }
                     setGraphic(messageBox);
                     // Прокручиваем ListView вниз к последнему сообщению
-                    chatListView.scrollTo(messages.size() - 1);
+                    chatListView.scrollTo(bot.messages.size() - 1);
                 }
             }
         });
@@ -180,53 +182,13 @@ public class ChatController {
         String formattedNow = now.format(formatter);
 
         // Пример начального сообщения от бота
-        messages.add(new Message("Bot", "Привет, " + name + "! Я чат-бот. Как я могу помочь?", formattedNow));
+        bot.messages.add(new Message("Bot", "Привет, " + name + "! Я чат-бот. Как я могу помочь?", formattedNow));
 
         // Автосохранение при выходе
         Platform.runLater(() -> {
-            chatListView.getScene().getWindow().setOnCloseRequest(event -> saveChatHistory());
+            chatListView.getScene().getWindow().setOnCloseRequest(event -> files.saveChatHistory(bot.messages));
         });
     }
 
-    /**
-     * Сохраняет историю сообщений в файл.
-     * <p>
-     * Проходит по всем сообщениям, формирует строку, где поля разделены символом «;»
-     * и записывает каждое сообщение в отдельной строке.
-     * </p>
-     */
-    private void saveChatHistory() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(HISTORY_FILE))) {
-            for (Message message : messages) {
-                writer.write(message.getTime() + ";" + message.getSender() + ";" + message.getContent());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace(); // выводит стек ошибки в стандартный системный поток для ошибок
-        }
-    }
-
-    /**
-     * Загружает историю сообщений из файла.
-     * <p>
-     * Если файл существует, каждая строка разбивается на три части (время, отправитель, текст)
-     * и каждое сообщение добавляется в ObservableList сообщений.
-     * </p>
-     */
-    private void loadChatHistory() {
-        if (Files.exists(Paths.get(HISTORY_FILE))) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(HISTORY_FILE))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(";", 3);
-                    if (parts.length == 3) {
-                        messages.add(new Message(parts[1], parts[2], parts[0]));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace(); // выводит стек ошибки в стандартный системный поток для ошибок
-            }
-        }
-    }
 
 }

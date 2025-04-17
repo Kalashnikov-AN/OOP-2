@@ -1,4 +1,4 @@
-// Автор: Калашников А.Н.
+
 
 package zabsu.telephone_sub_ui;
 import javafx.event.ActionEvent;
