@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.Controller">
+   <children>
+      <Button id="save_button" fx:id="save_button" layoutX="34.0" layoutY="547.0" mnemonicParsing="false" onAction="#save_buttonOnClick" prefHeight="46.0" prefWidth="100.0" text="Добавить" />
+      <TextField fx:id="text_name" layoutX="34.0" layoutY="169.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите ФИО абонента" />
+      <TableView fx:id="sub_table" layoutX="363.0" layoutY="140.0" prefHeight="418.0" prefWidth="474.0">
+        <columns>
+          <TableColumn fx:id="table_name" prefWidth="142.39996337890625" text="ФИО" />
+          <TableColumn fx:id="table_pn" minWidth="8.800048828125" prefWidth="61.5999755859375" text="Номер " />
+            <TableColumn fx:id="table_tariff" prefWidth="91.20001220703125" text="Тариф" />
+            <TableColumn fx:id="table_balance" prefWidth="78.39996337890625" text="Баланс" />
+            <TableColumn fx:id="table_an" prefWidth="99.20004882812498" text="Лиц. Счёт" />
+        </columns>
+      </TableView>
+      <TextField fx:id="text_pn" layoutX="34.0" layoutY="245.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите тел. номер абонента" />
+      <TextField fx:id="text_tariff" layoutX="34.0" layoutY="325.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите название тарифа" />
+      <TextField fx:id="text_balance" layoutX="32.0" layoutY="408.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите баланс абонента" />
+      <TextField fx:id="text_an" layoutX="34.0" layoutY="489.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите номер лиц. счёта" />
+      <Label layoutX="36.0" layoutY="140.0" text="ФИО абонента">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="214.0" text="Телефонный номер абонента">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="293.0" text="Название тарифа">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="38.0" layoutY="376.0" text="Баланс абонента">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="459.0" text="Номер лицевого счёта">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <MenuBar fx:id="menuDB" layoutX="14.0" layoutY="14.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Файл">
+            <items>
+              <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Открыть" />
+                  <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Сохранить" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Инструменты">
+            <items>
+              <MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Поиск" />
+                  <MenuItem fx:id="menuAdd" mnemonicParsing="false" text="Добавить" />
+                  <MenuItem fx:id="menuEdit" mnemonicParsing="false" text="Изменить" />
+                  <MenuItem fx:id="menuDelete" mnemonicParsing="false" text="Удалить" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Помощь">
+            <items>
+              <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе" />
+                  <MenuItem fx:id="menuAuthor" mnemonicParsing="false" text="Об авторе" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ToolBar layoutX="263.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0">
+        <items>
+            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30">
+                        <Image url="@icons/search.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30">
+                        <Image url="@icons/add.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30">
+                        <Image url="@icons/edit.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button layoutX="96.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Delete" />
+        </items>
+      </ToolBar>
+   </children>
+</AnchorPane>

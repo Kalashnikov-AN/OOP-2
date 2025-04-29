@@ -98,7 +98,6 @@ public class ChatController {
 
             // Добавляем новое сообщение в массив, хранящий сообщения
             bot.messages.add(new Message("Bot", bot.answer(text), formattedNow));
-            //todo: перенести эту логику(messages.add) в msgProcessing, тогда здесь будет bot.messages.add
 
             // Прокручиваем ListView вниз к последнему сообщению
             chatListView.scrollTo(bot.messages.size() - 1);
@@ -127,7 +126,7 @@ public class ChatController {
         bot.messages = FXCollections.observableArrayList();
         chatListView.setItems(bot.messages);
         // Загружаем историю сообщений
-        files.loadChatHistory(bot.messages);
+        files.loadChatHistory(bot.messages, "chat_history.txt");
         // Настраиваем кастомный cell factory для отображения сообщений
         chatListView.setCellFactory(listView -> new ListCell<Message>() {
             @Override
@@ -186,7 +185,7 @@ public class ChatController {
 
         // Автосохранение при выходе
         Platform.runLater(() -> {
-            chatListView.getScene().getWindow().setOnCloseRequest(event -> files.saveChatHistory(bot.messages));
+            chatListView.getScene().getWindow().setOnCloseRequest(event -> files.saveChatHistory(bot.messages, "chat_history.txt"));
         });
     }
 

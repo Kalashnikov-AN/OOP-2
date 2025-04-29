@@ -32,7 +32,6 @@ public class msgProcessing implements  ImsgProcessing {
      * отображаются в интерфейсе без необходимости вручную перерисовывать список.
      */
     public ObservableList<Message> messages;
-    //todo: не static
 
     /**
      * Список обработчиков ответов, реализующих интерфейс {@link IAnswer}.

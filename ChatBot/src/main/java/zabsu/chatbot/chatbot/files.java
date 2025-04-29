@@ -9,9 +9,6 @@ import java.nio.file.Paths;
  */
 public class files {
 
-    /** Путь к файлу истории сообщений */
-    private static final String HISTORY_FILE = "chat_history.txt";
-
     /**
      * Сохраняет историю сообщений в файл.
      * <p>
@@ -19,8 +16,8 @@ public class files {
      * и записывает каждое сообщение в отдельной строке.
      * </p>
      */
-    public static void saveChatHistory(ObservableList<Message> messages) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(HISTORY_FILE))) {
+    public static void saveChatHistory(ObservableList<Message> messages, String history_file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(history_file))) {
             for (Message message : messages) {
                 writer.write(message.getTime() + ";" + message.getSender() + ";" + message.getContent());
                 writer.newLine();
@@ -37,9 +34,9 @@ public class files {
      * и каждое сообщение добавляется в messages.
      * </p>
      */
-    public static void loadChatHistory(ObservableList<Message> messages) {
-        if (Files.exists(Paths.get(HISTORY_FILE))) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(HISTORY_FILE))) {
+    public static void loadChatHistory(ObservableList<Message> messages, String history_file) {
+        if (Files.exists(Paths.get(history_file))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(history_file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(";", 3);
