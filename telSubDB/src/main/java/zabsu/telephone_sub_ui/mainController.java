@@ -1,6 +1,8 @@
 
 
 package zabsu.telephone_sub_ui;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +61,7 @@ public class mainController {
 
     @FXML
     /// Таблица с записями телефонных абонентов
-    private TableView<TelSub> sub_table;
+    public TableView<TelSub> sub_table;
 
     @FXML
     /// Столбец - лицевой счёт
@@ -102,21 +104,16 @@ public class mainController {
     private TextField text_tariff;
 
     @FXML
+    private final ObservableList<TelSub> data = FXCollections.observableArrayList();
+
+    public void addSubscriber(TelSub subscriber) {
+        data.add(subscriber); // Добавляем данные в ObservableList
+    }
+
+    @FXML
     void enterAddWindow(ActionEvent event) throws IOException {
         try{
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        // Загружаем FXML для главного окна чат-бота
-//        FXMLLoader fxmlLoader = new FXMLLoader(TelSubApplication.class.getResource("addSub.fxml"));
-//        // Создаём экземпляр ChatController и заранее устанавливаем имя пользователя
-//        addController add_contr = new addController();
-//        // Программно задаём контроллер для FXML
-//        fxmlLoader.setController(add_contr);
-//        Scene scene = new Scene(fxmlLoader.load(), 1024, 724);
-//        // Подключаем CSS-стили
-//        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-//        // Устанавливаем новую сцену и отображаем её
-//        stage.setScene(scene);
-//        stage.show();
+
             // 1. Загрузка FXML для диалога
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/zabsu/telephone_sub_ui/addSub.fxml"));
             DialogPane dialogPane = loader.load();
@@ -135,6 +132,7 @@ public class mainController {
             // 4. Передача Stage в контроллер диалога
             addController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setMainController(this); // Передаем ссылку на главный контроллер
 
             // 5. Создание сцены и отображение окна
             Scene scene = new Scene(dialogPane);
@@ -148,52 +146,6 @@ public class mainController {
     }
 
     @FXML
-    /// Функция добавления записей при нажатии на кнопку "Добавить"
-    void save_buttonOnClick(ActionEvent event){
-        try{
-            // Создаём объект телефонного абонента через конструктор с параметрами
-    TelSub sub = new TelSub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
-            // Добавляем объект в таблицу
-            sub_table.getItems().add(sub); }
-        // Обрабатываем исключительные ситуации
-        catch(RuntimeException ex){
-            System.err.println(ex.getMessage());
-            // Если неправильно введён номер телефона
-            if(ex.getMessage().equals("Придерживайтесь формата +.(...)...-..-..")) {
-                text_pn.clear();
-                text_pn.setStyle("-fx-prompt-text-fill: red;");
-                text_pn.setPromptText(ex.getMessage());
-            }
-            // Если неправильно введён лицевой счёт
-            if(ex.getMessage().equals("Придерживайтесь  шестизначного числового формата")) {
-                text_an.clear();
-                text_an.setStyle("-fx-prompt-text-fill: red;");
-                text_an.setPromptText(ex.getMessage());
-            }
-            // Если неправильно введён тариф
-            if(ex.getMessage().equals("Выберите тариф из списка тарифов")) {
-                text_tariff.clear();
-                text_tariff.setStyle("-fx-prompt-text-fill: red;");
-                text_tariff.setPromptText(ex.getMessage());
-            }
-            // Если неправильно введено ФИО
-            if(ex.getMessage().equals("Ошибка: неверно введено ФИО")) {
-                text_name.clear();
-                text_name.setStyle("-fx-prompt-text-fill: red;");
-                text_name.setPromptText(ex.getMessage());
-            }
-            // Если неправильно введён баланс
-            if(ex.getMessage().equals("Ошибка: неверно введена сумма пополнения баланса")) {
-                text_balance.clear();
-                text_balance.setStyle("-fx-prompt-text-fill: red;");
-                text_balance.setPromptText(ex.getMessage());
-            }
-        }
-
-    }
-
-
-    @FXML
     void initialize() {
         // Связываем столбцы таблицы с соответствующими полями класса
         table_name.setCellValueFactory(new PropertyValueFactory<TelSub, String>("name"));
@@ -201,6 +153,7 @@ public class mainController {
         table_an.setCellValueFactory(new PropertyValueFactory<TelSub, String>("account_number"));
         table_tariff.setCellValueFactory(new PropertyValueFactory<TelSub, String>("tariff"));
         table_balance.setCellValueFactory(new PropertyValueFactory<TelSub, Double>("balance"));
+        sub_table.setItems(data);
 
     }
 

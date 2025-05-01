@@ -1,61 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.mainController">
    <children>
-      <Button id="save_button" fx:id="save_button" layoutX="34.0" layoutY="547.0" mnemonicParsing="false" onAction="#save_buttonOnClick" prefHeight="46.0" prefWidth="100.0" text="Добавить" />
-      <TextField fx:id="text_name" layoutX="34.0" layoutY="169.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите ФИО абонента" />
-      <TableView fx:id="sub_table" layoutX="363.0" layoutY="140.0" prefHeight="418.0" prefWidth="474.0">
+      <TableView fx:id="sub_table" layoutX="35.0" layoutY="111.0" prefHeight="447.0" prefWidth="802.0">
         <columns>
           <TableColumn fx:id="table_name" prefWidth="142.39996337890625" text="ФИО" />
-          <TableColumn fx:id="table_pn" minWidth="8.800048828125" prefWidth="61.5999755859375" text="Номер " />
-            <TableColumn fx:id="table_tariff" prefWidth="91.20001220703125" text="Тариф" />
-            <TableColumn fx:id="table_balance" prefWidth="78.39996337890625" text="Баланс" />
-            <TableColumn fx:id="table_an" prefWidth="99.20004882812498" text="Лиц. Счёт" />
+          <TableColumn fx:id="table_pn" minWidth="8.800048828125" prefWidth="128.800048828125" text="Номер " />
+            <TableColumn fx:id="table_tariff" prefWidth="88.0" text="Тариф" />
+            <TableColumn fx:id="table_balance" prefWidth="82.39996337890625" text="Баланс" />
+            <TableColumn fx:id="table_an" prefWidth="142.39999389648438" text="Лиц. Счёт" />
         </columns>
       </TableView>
-      <TextField fx:id="text_pn" layoutX="34.0" layoutY="245.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите тел. номер абонента" />
-      <TextField fx:id="text_tariff" layoutX="34.0" layoutY="325.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите название тарифа" />
-      <TextField fx:id="text_balance" layoutX="32.0" layoutY="408.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите баланс абонента" />
-      <TextField fx:id="text_an" layoutX="34.0" layoutY="489.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите номер лиц. счёта" />
-      <Label layoutX="36.0" layoutY="140.0" text="ФИО абонента">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="36.0" layoutY="214.0" text="Телефонный номер абонента">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="36.0" layoutY="293.0" text="Название тарифа">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="38.0" layoutY="376.0" text="Баланс абонента">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="36.0" layoutY="459.0" text="Номер лицевого счёта">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <MenuBar fx:id="menuDB" layoutX="14.0" layoutY="14.0">
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
@@ -103,7 +69,14 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="deleteTool" layoutX="96.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="deleteTool" layoutX="96.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@icons/delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
         </items>
       </ToolBar>
    </children>
