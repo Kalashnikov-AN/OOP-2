@@ -3,11 +3,28 @@
 package zabsu.telephone_sub_ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /// Класс-контроллер
-public class Controller {
+public class mainController {
+
+    @FXML
+    private Button addTool;
+
+    @FXML
+    private Button deleteTool;
+
+    @FXML
+    private Button editTool;
 
     @FXML
     private MenuItem menuAbout;
@@ -83,6 +100,52 @@ public class Controller {
     @FXML
     /// Поле для ввода тарифа
     private TextField text_tariff;
+
+    @FXML
+    void enterAddWindow(ActionEvent event) throws IOException {
+        try{
+//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        // Загружаем FXML для главного окна чат-бота
+//        FXMLLoader fxmlLoader = new FXMLLoader(TelSubApplication.class.getResource("addSub.fxml"));
+//        // Создаём экземпляр ChatController и заранее устанавливаем имя пользователя
+//        addController add_contr = new addController();
+//        // Программно задаём контроллер для FXML
+//        fxmlLoader.setController(add_contr);
+//        Scene scene = new Scene(fxmlLoader.load(), 1024, 724);
+//        // Подключаем CSS-стили
+//        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+//        // Устанавливаем новую сцену и отображаем её
+//        stage.setScene(scene);
+//        stage.show();
+            // 1. Загрузка FXML для диалога
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/zabsu/telephone_sub_ui/addSub.fxml"));
+            DialogPane dialogPane = loader.load();
+
+            Stage mainStage = (Stage) sub_table.getScene().getWindow();
+
+            // 2. Создание нового окна (Stage)
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Добавить абонента");
+
+            // 3. Настройка модальности
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(mainStage); // Родительское окно
+           // dialogStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Родительское окно
+
+            // 4. Передача Stage в контроллер диалога
+            addController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            // 5. Создание сцены и отображение окна
+            Scene scene = new Scene(dialogPane);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait(); // Блокирует основное окно
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     @FXML
     /// Функция добавления записей при нажатии на кнопку "Добавить"

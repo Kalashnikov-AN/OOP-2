@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.mainController">
    <children>
       <Button id="save_button" fx:id="save_button" layoutX="34.0" layoutY="547.0" mnemonicParsing="false" onAction="#save_buttonOnClick" prefHeight="46.0" prefWidth="100.0" text="Добавить" />
       <TextField fx:id="text_name" layoutX="34.0" layoutY="169.0" prefHeight="26.0" prefWidth="228.0" promptText="Введите ФИО абонента" />
@@ -67,7 +67,7 @@
           <Menu mnemonicParsing="false" text="Инструменты">
             <items>
               <MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Поиск" />
-                  <MenuItem fx:id="menuAdd" mnemonicParsing="false" text="Добавить" />
+                  <MenuItem fx:id="menuAdd" mnemonicParsing="false" onAction="#enterAddWindow" text="Добавить" />
                   <MenuItem fx:id="menuEdit" mnemonicParsing="false" text="Изменить" />
                   <MenuItem fx:id="menuDelete" mnemonicParsing="false" text="Удалить" />
             </items>
@@ -80,30 +80,30 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ToolBar layoutX="263.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0">
+      <ToolBar layoutX="336.0" layoutY="14.0" prefHeight="51.0" prefWidth="297.0">
         <items>
-            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+            <Button fx:id="searchTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
                         <Image url="@icons/search.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+            <Button fx:id="addTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#enterAddWindow" text="">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
                         <Image url="@icons/add.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+            <Button fx:id="editTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
                         <Image url="@icons/edit.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button layoutX="96.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Delete" />
+            <Button fx:id="deleteTool" layoutX="96.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Delete" />
         </items>
       </ToolBar>
    </children>
