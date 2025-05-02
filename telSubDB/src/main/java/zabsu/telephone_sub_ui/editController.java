@@ -45,7 +45,7 @@ public class editController {
     @FXML
     private void handleSave(ActionEvent event) {
         try {
-            System.out.println(mainController.data.get(0)); //todo: Убрать задание базовых по типу Name Surname
+           // System.out.println(mainController.data.get(0)); //todo: Убрать задание базовых по типу Name Surname
             // Обновляем объект новыми значениями
             selectedSubscriber.setName(text_name.getText());
             selectedSubscriber.setPhone_number(text_pn.getText());
@@ -56,7 +56,7 @@ public class editController {
             // Закрываем окно
             dialogStage.close();
             mainController.sub_table.refresh();;
-            System.out.println(mainController.data.get(0));
+           // System.out.println(mainController.data.get(0));
 
         } catch (Exception e) {
             // Обработка ошибок валидации

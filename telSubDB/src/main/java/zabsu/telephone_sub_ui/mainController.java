@@ -3,6 +3,7 @@
 package zabsu.telephone_sub_ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -104,12 +105,19 @@ public class mainController {
     /// Поле для ввода тарифа
     private TextField text_tariff;
 
-    @FXML
-    public final ObservableList<TelSub> data = FXCollections.observableArrayList();
+   /* @FXML
+    public final ObservableList<TelSub> data = FXCollections.observableArrayList();*/
 
-    public void addSubscriber(TelSub subscriber) {
-        data.add(subscriber); // Добавляем данные в ObservableList
-    }
+    @FXML private TextField searchField;
+
+    @FXML private ComboBox<String> searchCategory;
+
+   // private final ObservableList<TelSub> filteredData = FXCollections.observableArrayList();
+
+//    private final FilteredList<TelSub> filteredData = new FilteredList<>(data);
+
+    public TelSubDatabase DB;
+
 
     @FXML
     void enterAddWindow(ActionEvent event) throws IOException {
@@ -161,7 +169,7 @@ public class mainController {
         }
 
         // 3. Удаляем выбранный элемент из ObservableList
-        System.out.println(data.get(0));
+        //System.out.println(data.get(0));
         sub_table.getItems().remove(selectedSubscriber); //todo: написать тест, что удаляется именно из массива
         //System.out.println(data.get(0));
         // 4. (Опционально) Показываем подтверждение
@@ -214,6 +222,7 @@ void onSaveFile(ActionEvent event) {
 
     @FXML
     void onLoadFile(ActionEvent event) {
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Загрузить базу данных");
         fileChooser.getExtensionFilters().addAll(
@@ -223,7 +232,7 @@ void onSaveFile(ActionEvent event) {
 
         // Показываем диалог открытия
         File file = fileChooser.showOpenDialog(sub_table.getScene().getWindow());
-
+        sub_table.setItems(DB.data); // если перед этим был поиск
         if (file != null) {
             try {
                 sub_table.getItems().clear(); // Очищаем текущие данные
@@ -245,14 +254,52 @@ void onSaveFile(ActionEvent event) {
     }
 
     @FXML
+    void handleSearch(ActionEvent event) { //todo: Удаление найденого
+        String query = searchField.getText().toLowerCase();
+        String category = searchCategory.getValue();
+        sub_table.setItems(DB.data); // для повторного поиска возвращаемся к исходным данным
+        DB.filteredData.setPredicate(sub -> {
+            if (query.isEmpty()) return true;
+        //filteredData.setAll(sub_table.getItems().filtered(sub -> {
+            if (category == null || category.equals("Все поля")) {
+                return sub.getName().toLowerCase().contains(query) ||
+                        sub.getPhone_number().contains(query) ||
+                        sub.getAccount_number().contains(query) ||
+                        sub.getTariff().toLowerCase().contains(query) ||
+                        String.valueOf(sub.getBalance()).contains(query);
+            } else {
+                switch (category) {
+                    case "ФИО": return sub.getName().toLowerCase().contains(query);
+                    case "Телефон": return sub.getPhone_number().contains(query);
+                    case "Лицевой счёт": return sub.getAccount_number().contains(query);
+                    default: return true;
+                }
+            }
+        });
+
+        sub_table.setItems(DB.filteredData);
+    }
+
+    @FXML
+    void handleResetFilter(ActionEvent event) {
+        searchField.clear();
+        searchCategory.getSelectionModel().clearSelection();
+        //DB.filteredData.setPredicate(null); // Сброс фильтра
+        sub_table.setItems(DB.data);
+    }
+
+    @FXML
     void initialize() {
         // Связываем столбцы таблицы с соответствующими полями класса
+        DB = new TelSubDatabase();
         table_name.setCellValueFactory(new PropertyValueFactory<TelSub, String>("name"));
         table_pn.setCellValueFactory(new PropertyValueFactory<TelSub, String>("phone_number"));
         table_an.setCellValueFactory(new PropertyValueFactory<TelSub, String>("account_number"));
         table_tariff.setCellValueFactory(new PropertyValueFactory<TelSub, String>("tariff"));
         table_balance.setCellValueFactory(new PropertyValueFactory<TelSub, Double>("balance"));
-        sub_table.setItems(data);
+        DB.data = FXCollections.observableArrayList();
+        DB.filteredData = new FilteredList<>(DB.data);
+        sub_table.setItems(DB.data);
 
     }
 
