@@ -11,6 +11,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.TextField?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="869.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.mainController">
    <children>
       <TableView fx:id="sub_table" layoutX="35.0" layoutY="111.0" prefHeight="447.0" prefWidth="802.0">
@@ -26,8 +31,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-              <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Открыть" />
-                  <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Сохранить" />
+              <MenuItem fx:id="menuOpen" mnemonicParsing="false" onAction="#onLoadFile" text="Открыть" />
+                  <MenuItem fx:id="menuSave" mnemonicParsing="false" onAction="#onSaveFile" text="Сохранить" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Инструменты">
@@ -35,7 +40,7 @@
               <MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Поиск" />
                   <MenuItem fx:id="menuAdd" mnemonicParsing="false" onAction="#enterAddWindow" text="Добавить" />
                   <MenuItem fx:id="menuEdit" mnemonicParsing="false" text="Изменить" />
-                  <MenuItem fx:id="menuDelete" mnemonicParsing="false" text="Удалить" />
+                  <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#onDeleteClick" text="Удалить" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Помощь">
@@ -62,14 +67,14 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="editTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" text="">
+            <Button fx:id="editTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#onEditClick" text="">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
                         <Image url="@icons/edit.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="deleteTool" layoutX="96.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0">
+            <Button fx:id="deleteTool" layoutX="96.0" layoutY="12.0" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="26.0" prefWidth="56.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true">
                      <image>

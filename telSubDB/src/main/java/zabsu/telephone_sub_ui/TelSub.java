@@ -128,7 +128,7 @@ public class TelSub {
     /// Возвращает строку из всех полей объекта класса TelSub, переопределяет метод toString() стандартного класса Object
     @Override
     public String toString() {
-        return phone_number + " " + account_number + " " + tariff + " " + name + " " + balance;
+        return phone_number + ";" + account_number + ";" + tariff + ";" + name + ";" + balance;
     }
 
 }

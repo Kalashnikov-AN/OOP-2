@@ -6,14 +6,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /// Класс-контроллер
@@ -104,7 +105,7 @@ public class mainController {
     private TextField text_tariff;
 
     @FXML
-    private final ObservableList<TelSub> data = FXCollections.observableArrayList();
+    public final ObservableList<TelSub> data = FXCollections.observableArrayList();
 
     public void addSubscriber(TelSub subscriber) {
         data.add(subscriber); // Добавляем данные в ObservableList
@@ -142,7 +143,105 @@ public class mainController {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @FXML
+    void onDeleteClick(ActionEvent event) {
+        // 1. Получаем выбранный элемент в таблице
+        TelSub selectedSubscriber = sub_table.getSelectionModel().getSelectedItem();
+
+        // 2. Проверяем, что строка действительно выбрана
+        if (selectedSubscriber == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            alert.setContentText("Выберите абонента для удаления!");
+            alert.showAndWait();
+            return;
+        }
+
+        // 3. Удаляем выбранный элемент из ObservableList
+        System.out.println(data.get(0));
+        sub_table.getItems().remove(selectedSubscriber); //todo: написать тест, что удаляется именно из массива
+        //System.out.println(data.get(0));
+        // 4. (Опционально) Показываем подтверждение
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Успешно");
+        alert.setHeaderText(null);
+        alert.setContentText("Абонент " + selectedSubscriber.getName() + " удалён!");
+        alert.showAndWait();
+    }
+
+    @FXML
+    void onEditClick(ActionEvent event) throws IOException {
+        TelSub selected = sub_table.getSelectionModel().getSelectedItem();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("editSub.fxml"));
+        Parent root = loader.load();
+
+        editController controller = loader.getController();
+        controller.init(selected); // Передаем выбранный объект
+        controller.setMainController(this);
+
+        Stage stage = new Stage();
+        controller.setDialogStage(stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
+@FXML
+void onSaveFile(ActionEvent event) {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Сохранить базу данных");
+    fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt"),
+            new FileChooser.ExtensionFilter("Все файлы", "*.*")
+    );
+
+    // Показываем диалог сохранения
+    File file = fileChooser.showSaveDialog(sub_table.getScene().getWindow());
+
+    if (file != null) {
+        try {
+            files.saveHistory(sub_table.getItems(), file.getAbsolutePath());
+            showAlert("Сохранение завершено", "Файл успешно сохранён: " + file.getName());
+        } catch (Exception e) {
+            showAlert("Ошибка сохранения", "Не удалось сохранить файл: " + e.getMessage());
+        }
+    }
+}
+
+    @FXML
+    void onLoadFile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Загрузить базу данных");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt"),
+                new FileChooser.ExtensionFilter("Все файлы", "*.*")
+        );
+
+        // Показываем диалог открытия
+        File file = fileChooser.showOpenDialog(sub_table.getScene().getWindow());
+
+        if (file != null) {
+            try {
+                sub_table.getItems().clear(); // Очищаем текущие данные
+                files.loadHistory(sub_table.getItems(), file.getAbsolutePath());
+                showAlert("Загрузка завершена", "Файл успешно загружен: " + file.getName());
+            } catch (Exception e) {
+                showAlert("Ошибка загрузки", "Не удалось загрузить файл: " + e.getMessage());
+            }
+        }
+    }
+
+    // Вспомогательный метод для показа уведомлений
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     @FXML
