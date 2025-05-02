@@ -4,6 +4,7 @@ package zabsu.telephone_sub_ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -170,7 +171,8 @@ public class mainController {
 
         // 3. Удаляем выбранный элемент из ObservableList
         //System.out.println(data.get(0));
-        sub_table.getItems().remove(selectedSubscriber); //todo: написать тест, что удаляется именно из массива
+        DB.deleteSubscriber(selectedSubscriber);
+       // sub_table.getItems().remove(selectedSubscriber); //todo: написать тест, что удаляется именно из массива
         //System.out.println(data.get(0));
         // 4. (Опционально) Показываем подтверждение
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -260,7 +262,6 @@ void onSaveFile(ActionEvent event) {
         sub_table.setItems(DB.data); // для повторного поиска возвращаемся к исходным данным
         DB.filteredData.setPredicate(sub -> {
             if (query.isEmpty()) return true;
-        //filteredData.setAll(sub_table.getItems().filtered(sub -> {
             if (category == null || category.equals("Все поля")) {
                 return sub.getName().toLowerCase().contains(query) ||
                         sub.getPhone_number().contains(query) ||
@@ -277,7 +278,7 @@ void onSaveFile(ActionEvent event) {
             }
         });
 
-        sub_table.setItems(DB.filteredData);
+        sub_table.setItems(DB.sortedData);
     }
 
     @FXML
@@ -286,6 +287,11 @@ void onSaveFile(ActionEvent event) {
         searchCategory.getSelectionModel().clearSelection();
         //DB.filteredData.setPredicate(null); // Сброс фильтра
         sub_table.setItems(DB.data);
+    }
+
+    @FXML
+    void onAboutAuthorClick(ActionEvent event){
+    showAlert("Об авторе", "Автор - Калашников А.Н.");
     }
 
     @FXML
@@ -299,6 +305,10 @@ void onSaveFile(ActionEvent event) {
         table_balance.setCellValueFactory(new PropertyValueFactory<TelSub, Double>("balance"));
         DB.data = FXCollections.observableArrayList();
         DB.filteredData = new FilteredList<>(DB.data);
+        DB.sortedData = new SortedList<>(DB.filteredData); // Инициализируем SortedList
+
+        // Привязываем сортировку таблицы к SortedList
+        DB.sortedData.comparatorProperty().bind(sub_table.comparatorProperty());
         sub_table.setItems(DB.data);
 
     }

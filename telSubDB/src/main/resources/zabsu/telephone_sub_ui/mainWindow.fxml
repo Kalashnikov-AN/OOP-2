@@ -45,7 +45,7 @@
           <Menu mnemonicParsing="false" text="Помощь">
             <items>
               <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе" />
-                  <MenuItem fx:id="menuAuthor" mnemonicParsing="false" text="Об авторе" />
+                  <MenuItem fx:id="menuAuthor" mnemonicParsing="false" onAction="#onAboutAuthorClick" text="Об авторе" />
             </items>
           </Menu>
         </menus>

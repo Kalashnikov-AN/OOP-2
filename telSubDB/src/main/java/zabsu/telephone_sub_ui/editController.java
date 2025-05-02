@@ -47,12 +47,13 @@ public class editController {
         try {
            // System.out.println(mainController.data.get(0)); //todo: Убрать задание базовых по типу Name Surname
             // Обновляем объект новыми значениями
-            selectedSubscriber.setName(text_name.getText());
-            selectedSubscriber.setPhone_number(text_pn.getText());
-            selectedSubscriber.setAccount_number(text_an.getText());
-            selectedSubscriber.setTariff(text_tariff.getText());
-            selectedSubscriber.balance = (Double.parseDouble(text_balance.getText()));
-
+//            selectedSubscriber.setName(text_name.getText());
+//            selectedSubscriber.setPhone_number(text_pn.getText());
+//            selectedSubscriber.setAccount_number(text_an.getText());
+//            selectedSubscriber.setTariff(text_tariff.getText());
+//            selectedSubscriber.balance = (Double.parseDouble(text_balance.getText()));
+            mainController.DB.editSubscriber(selectedSubscriber, text_pn.getText(), text_an.getText(),
+                    text_name.getText(), text_tariff.getText(), Double.parseDouble(text_balance.getText()));
             // Закрываем окно
             dialogStage.close();
             mainController.sub_table.refresh();;
