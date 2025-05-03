@@ -1,8 +1,5 @@
-
-
 package zabsu.telephone_sub_ui;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -12,50 +9,63 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 
-/// Класс-контроллер
+/// Класс-контроллер главного окна
 public class mainController {
 
     @FXML
+    /// Кнопка для добавления записи
     private Button addTool;
 
     @FXML
+    /// Кнопка для удаления записи
     private Button deleteTool;
 
     @FXML
+    /// Кнопка для редактирования записи
     private Button editTool;
 
     @FXML
+    /// Получение справки о программе через меню
     private MenuItem menuAbout;
 
     @FXML
+    /// Добавление записи в базу данных через меню
     private MenuItem menuAdd;
 
     @FXML
+    /// Получение информации аб авторе через меню
     private MenuItem menuAuthor;
 
     @FXML
+    /// Меню базы данных
     private MenuBar menuDB;
 
     @FXML
+    /// Удаление записи из базы данных через меню
     private MenuItem menuDelete;
 
     @FXML
+    /// Редактирование записи в базе данных через меню
     private MenuItem menuEdit;
 
     @FXML
+    /// Загрузка базы данных из файла через меню
     private MenuItem menuOpen;
 
     @FXML
+    /// Сохранение базы данных в файл через меню
     private MenuItem menuSave;
 
     @FXML
+    /// Меню
     private MenuItem menuSearch;
 
     @FXML
@@ -106,17 +116,15 @@ public class mainController {
     /// Поле для ввода тарифа
     private TextField text_tariff;
 
-   /* @FXML
-    public final ObservableList<TelSub> data = FXCollections.observableArrayList();*/
+    @FXML
+    /// Поле для ввода поискового запроса
+    private TextField searchField;
 
-    @FXML private TextField searchField;
+    @FXML
+    /// Выбор фильтра для поиска
+    private ComboBox<String> searchCategory;
 
-    @FXML private ComboBox<String> searchCategory;
-
-   // private final ObservableList<TelSub> filteredData = FXCollections.observableArrayList();
-
-//    private final FilteredList<TelSub> filteredData = new FilteredList<>(data);
-
+    /// Объект класса базы данных
     public TelSubDatabase DB;
 
 
@@ -124,27 +132,26 @@ public class mainController {
     void enterAddWindow(ActionEvent event) throws IOException {
         try{
 
-            // 1. Загрузка FXML для диалога
+            // Загрузка FXML для окна добавления записи
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/zabsu/telephone_sub_ui/addSub.fxml"));
             DialogPane dialogPane = loader.load();
 
-            Stage mainStage = (Stage) sub_table.getScene().getWindow();
+            Stage mainStage = (Stage) sub_table.getScene().getWindow(); // получаем ссылку на главное окно
 
-            // 2. Создание нового окна (Stage)
+            // Создание нового окна
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Добавить абонента");
 
-            // 3. Настройка модальности
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            // Настройка модальности
+            dialogStage.initModality(Modality.APPLICATION_MODAL); // Блокируем взаимодействие с другими окнами
             dialogStage.initOwner(mainStage); // Родительское окно
-           // dialogStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Родительское окно
 
-            // 4. Передача Stage в контроллер диалога
+            // Передача Stage в контроллер добавления записи
             addController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
+            controller.setDialogStage(dialogStage); // Передаём созданное окно в контроллер добавления записи
             controller.setMainController(this); // Передаем ссылку на главный контроллер
 
-            // 5. Создание сцены и отображение окна
+            // Создание сцены и отображение окна
             Scene scene = new Scene(dialogPane);
             dialogStage.setScene(scene);
             dialogStage.showAndWait(); // Блокирует основное окно
@@ -156,60 +163,50 @@ public class mainController {
 
     @FXML
     void onDeleteClick(ActionEvent event) {
-        // 1. Получаем выбранный элемент в таблице
+        // Получаем выбранный элемент в таблице
         TelSub selectedSubscriber = sub_table.getSelectionModel().getSelectedItem();
 
-        // 2. Проверяем, что строка действительно выбрана
-        if (selectedSubscriber == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ошибка");
-            alert.setHeaderText(null);
-            alert.setContentText("Выберите абонента для удаления!");
-            alert.showAndWait();
-            return;
-        }
-
-        // 3. Удаляем выбранный элемент из ObservableList
-        //System.out.println(data.get(0));
+        // Удаляем выбранный элемент из ObservableList
         DB.deleteSubscriber(selectedSubscriber);
-       // sub_table.getItems().remove(selectedSubscriber); //todo: написать тест, что удаляется именно из массива
-        //System.out.println(data.get(0));
-        // 4. (Опционально) Показываем подтверждение
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Успешно");
-        alert.setHeaderText(null);
-        alert.setContentText("Абонент " + selectedSubscriber.getName() + " удалён!");
-        alert.showAndWait();
     }
 
     @FXML
     void onEditClick(ActionEvent event) throws IOException {
+        // Получаем выбранный элемент в таблице
         TelSub selected = sub_table.getSelectionModel().getSelectedItem();
 
+        Stage mainStage = (Stage) sub_table.getScene().getWindow(); // получаем ссылку на главное окно
+
+        // Загрузка FXML для окна редактирования записи
         FXMLLoader loader = new FXMLLoader(getClass().getResource("editSub.fxml"));
         Parent root = loader.load();
 
-        editController controller = loader.getController();
+        editController controller = loader.getController(); // Создаём контроллер окна редактирования записи
         controller.init(selected); // Передаем выбранный объект
-        controller.setMainController(this);
+        controller.setMainController(this); // Передаем ссылку на главный контроллер
 
-        Stage stage = new Stage();
-        controller.setDialogStage(stage);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        Stage stage = new Stage(); // Создание нового окна
+        controller.setDialogStage(stage); // Передаём созданное окно в контроллер редактирования записи
+
+        stage.initModality(Modality.APPLICATION_MODAL); // Блокируем взаимодействие с другими окнами
+        stage.initOwner(mainStage); // Родительское окно
+
         stage.setScene(new Scene(root));
-        stage.showAndWait();
+        stage.showAndWait(); // Блокирует основное окно
     }
 
 @FXML
 void onSaveFile(ActionEvent event) {
-    FileChooser fileChooser = new FileChooser();
+    FileChooser fileChooser = new FileChooser(); // Системный диалог выбора файла
     fileChooser.setTitle("Сохранить базу данных");
-    fileChooser.getExtensionFilters().addAll(
+
+    fileChooser.getExtensionFilters().addAll( // Ограничивает выбор файлов по расширению
             new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt"),
             new FileChooser.ExtensionFilter("Все файлы", "*.*")
     );
 
-    // Показываем диалог сохранения
+    // Показываем модальное окно диалога сохранения
+    // передаём как параметр родительское окно
     File file = fileChooser.showSaveDialog(sub_table.getScene().getWindow());
 
     if (file != null) {
@@ -224,22 +221,24 @@ void onSaveFile(ActionEvent event) {
 
     @FXML
     void onLoadFile(ActionEvent event) {
-
-        FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser(); // Системный диалог выбора файла
         fileChooser.setTitle("Загрузить базу данных");
-        fileChooser.getExtensionFilters().addAll(
+
+        fileChooser.getExtensionFilters().addAll( // Ограничивает выбор файлов по расширению
                 new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt"),
                 new FileChooser.ExtensionFilter("Все файлы", "*.*")
         );
 
-        // Показываем диалог открытия
+        // Показываем модальное окно диалога открытия файла
+        // передаём как параметр родительское окно
         File file = fileChooser.showOpenDialog(sub_table.getScene().getWindow());
+
         sub_table.setItems(DB.data); // если перед этим был поиск
+
         if (file != null) {
             try {
                 sub_table.getItems().clear(); // Очищаем текущие данные
                 files.loadHistory(sub_table.getItems(), file.getAbsolutePath());
-                showAlert("Загрузка завершена", "Файл успешно загружен: " + file.getName());
             } catch (Exception e) {
                 showAlert("Ошибка загрузки", "Не удалось загрузить файл: " + e.getMessage());
             }
@@ -252,17 +251,24 @@ void onSaveFile(ActionEvent event) {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        // Добавляем иконку
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("icons/DB.png")));
         alert.showAndWait();
     }
 
     @FXML
-    void handleSearch(ActionEvent event) { //todo: Удаление найденого
-        String query = searchField.getText().toLowerCase();
-        String category = searchCategory.getValue();
+    void onSearchClick(ActionEvent event) {
+        String query = searchField.getText().toLowerCase(); // поисковый запрос
+        String category = searchCategory.getValue(); // фильтр для поиска
+
         sub_table.setItems(DB.data); // для повторного поиска возвращаемся к исходным данным
-        DB.filteredData.setPredicate(sub -> {
-            if (query.isEmpty()) return true;
+
+        DB.filteredData.setPredicate(sub -> { // Устанавливает условие фильтрации для filteredData
+
+            if (query.isEmpty()) return true; // Возвращает true для всех элементов, показывая всю таблицу
             if (category == null || category.equals("Все поля")) {
+                // Проверяет, содержится ли query в любом из полей
                 return sub.getName().toLowerCase().contains(query) ||
                         sub.getPhone_number().contains(query) ||
                         sub.getAccount_number().contains(query) ||
@@ -270,23 +276,25 @@ void onSaveFile(ActionEvent event) {
                         String.valueOf(sub.getBalance()).contains(query);
             } else {
                 switch (category) {
+                    // Поиск по конкретной категории
                     case "ФИО": return sub.getName().toLowerCase().contains(query);
                     case "Телефон": return sub.getPhone_number().contains(query);
                     case "Лицевой счёт": return sub.getAccount_number().contains(query);
+                    case "Тариф": return sub.getTariff().toLowerCase().contains(query);
+                    case "Баланс": return String.valueOf(sub.getBalance()).contains(query);
                     default: return true;
                 }
             }
         });
 
-        sub_table.setItems(DB.sortedData);
+        sub_table.setItems(DB.sortedData); // Обновление таблицы после поиска
     }
 
     @FXML
-    void handleResetFilter(ActionEvent event) {
+    void onResetFilter(ActionEvent event) {
         searchField.clear();
         searchCategory.getSelectionModel().clearSelection();
-        //DB.filteredData.setPredicate(null); // Сброс фильтра
-        sub_table.setItems(DB.data);
+        sub_table.setItems(DB.data); // возвращаем исходные данные в таблицу
     }
 
     @FXML
@@ -295,20 +303,48 @@ void onSaveFile(ActionEvent event) {
     }
 
     @FXML
+    void onAboutProgramClick(ActionEvent event){
+        try{
+        // Загрузка FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/zabsu/telephone_sub_ui/about_program.fxml"));
+        AnchorPane root = loader.load();
+
+        // Создание нового окна
+        Stage aboutStage = new Stage();
+        aboutStage.setTitle("Об авторе");
+
+        aboutStage.initModality(Modality.APPLICATION_MODAL); // Блокируем взаимодействие с другими окнами
+        aboutStage.initOwner(sub_table.getScene().getWindow()); // Родительское окно
+
+        // Настройка контроллера
+        aboutProgramController controller = loader.getController();
+        controller.setDialogStage(aboutStage);
+
+        // Отображение окна
+        aboutStage.setScene(new Scene(root));
+        aboutStage.setResizable(false);
+        aboutStage.showAndWait();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
     void initialize() {
         // Связываем столбцы таблицы с соответствующими полями класса
-        DB = new TelSubDatabase();
         table_name.setCellValueFactory(new PropertyValueFactory<TelSub, String>("name"));
         table_pn.setCellValueFactory(new PropertyValueFactory<TelSub, String>("phone_number"));
         table_an.setCellValueFactory(new PropertyValueFactory<TelSub, String>("account_number"));
         table_tariff.setCellValueFactory(new PropertyValueFactory<TelSub, String>("tariff"));
         table_balance.setCellValueFactory(new PropertyValueFactory<TelSub, Double>("balance"));
-        DB.data = FXCollections.observableArrayList();
-        DB.filteredData = new FilteredList<>(DB.data);
-        DB.sortedData = new SortedList<>(DB.filteredData); // Инициализируем SortedList
-
+        // Объект класса базы данных
+        DB = new TelSubDatabase();
+        DB.data = FXCollections.observableArrayList(); // массив для записей
+        DB.filteredData = new FilteredList<>(DB.data); // массив для записей после поиска
+        // массив для записей после поиска(можно сортировать по столбцам)
+        DB.sortedData = new SortedList<>(DB.filteredData);
         // Привязываем сортировку таблицы к SortedList
-        DB.sortedData.comparatorProperty().bind(sub_table.comparatorProperty());
+        DB.sortedData.comparatorProperty().bind(sub_table.comparatorProperty()); // устанавливаем компаратор
         sub_table.setItems(DB.data);
 
     }

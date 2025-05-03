@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="zabsu.telephone_sub_ui.aboutProgramController"
+            prefHeight="400.0" prefWidth="600.0">
+    <ScrollPane fitToWidth="true" fitToHeight="true">
+        <VBox spacing="10" prefWidth="580">
+            <!-- Заголовок -->
+            <Label text="Телефонная база данных" styleClass="header">
+                <font>
+                    <Font name="Arial Bold" size="20"/>
+                </font>
+                <padding>
+                    <Insets top="10" left="10"/>
+                </padding>
+            </Label>
+
+            <!-- Основной текст -->
+            <Text text="Версия: 1.0&#10;Автор: Ваша Компания"
+                  styleClass="content-text"
+                  font="$text-font">
+                <VBox.margin>
+                    <Insets left="10"/>
+                </VBox.margin>
+            </Text>
+
+            <!-- Разделитель -->
+            <Separator prefWidth="580"/>
+
+            <!-- Возможности -->
+            <Text text="Основные возможности:" styleClass="subheader"/>
+            <Text text="• Управление абонентами (добавление/редактирование/удаление)&#10;• Поиск и фильтрация записей&#10;• Импорт/экспорт данных в текстовый формат"
+                  styleClass="content-text"/>
+
+            <!-- Контакты -->
+            <Text text="Контакты:" styleClass="subheader"/>
+            <Text text="Email: support@company.com&#10;Телефон: +7 (XXX) XXX-XX-XX"
+                  styleClass="content-text"/>
+
+            <!-- Логотип -->
+            <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+                <image>
+                    <Image url="@icons/app_icon.png"/>
+                </image>
+                <VBox.margin>
+                    <Insets top="20" bottom="10"/>
+                </VBox.margin>
+            </ImageView>
+        </VBox>
+    </ScrollPane>
+
+    <!-- Кнопка закрытия -->
+    <Button text="OK"
+            onAction="#handleClose"
+            layoutX="265"
+            layoutY="490"
+            prefWidth="70"
+            styleClass="ok-button">
+        <graphic>
+            <ImageView fitWidth="20" fitHeight="20">
+                <Image url="@icons/checkmark.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+
+</AnchorPane>

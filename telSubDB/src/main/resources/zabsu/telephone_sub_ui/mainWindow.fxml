@@ -44,7 +44,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Помощь">
             <items>
-              <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="О программе" />
+              <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#onAboutProgramClick" text="О программе" />
                   <MenuItem fx:id="menuAuthor" mnemonicParsing="false" onAction="#onAboutAuthorClick" text="Об авторе" />
             </items>
           </Menu>
@@ -85,11 +85,13 @@
                        <String fx:value="ФИО" />
                        <String fx:value="Телефон" />
                        <String fx:value="Лицевой счёт" />
+                       <String fx:value="Тариф" />
+                       <String fx:value="Баланс" />
                    </FXCollections>
                </items>
            </ComboBox>
-           <Button onAction="#handleSearch" text="Найти" />
-           <Button onAction="#handleResetFilter" text="Сбросить фильтр" />
+           <Button onAction="#onSearchClick" text="Найти" />
+           <Button onAction="#onResetFilter" text="Сбросить фильтр" />
        </HBox>
    </children>
 </AnchorPane>

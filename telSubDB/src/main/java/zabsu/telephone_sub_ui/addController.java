@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class addController {
@@ -38,6 +39,8 @@ public class addController {
 
     public void setMainController(mainController mainController) {
         this.mainController = mainController;
+        Image icon = new Image(getClass().getResourceAsStream("icons/DB.png"));
+        dialogStage.getIcons().add(icon);
     }
 
     @FXML
