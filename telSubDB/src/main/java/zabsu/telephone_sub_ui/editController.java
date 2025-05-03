@@ -8,47 +8,71 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Контроллер окна редактирования записи абонента.
+ */
 public class editController {
+    /// Кнопка сохранения изменений
     @FXML
     private Button save_button;
 
+    /// Поле для ввода лицевого счёта
     @FXML
     private TextField text_an;
 
+    /// Поле для ввода баланса */
     @FXML
     private TextField text_balance;
 
+    /// Поле для ввода ФИО
     @FXML
     private TextField text_name;
 
+    /// Поле для ввода номера телефона
     @FXML
     private TextField text_pn;
 
+    /// Поле для ввода тарифа
     @FXML
     private TextField text_tariff;
 
+    /// Окно диалога редактирования
     private Stage dialogStage;
 
-    private mainController mainController; // Ссылка на главный контроллер
+    /// Ссылка на контроллер главного окна
+    private mainController mainController;
 
-    private TelSub selectedSubscriber; // Добавляем поле для хранения редактируемого объекта
+    /// Поле для хранения редактируемого объекта
+    private TelSub selectedSubscriber;
 
+    /**
+     * Устанавливает контроллер главного окна.
+     *
+     * @param mainController контроллер главного окна
+     */
     public void setMainController(mainController mainController) {
         this.mainController = mainController;
     }
 
-    // Метод для установки Stage диалога
+    /**
+     * Устанавливает окно редактирования и добавляет иконку
+     *
+     * @param dialogStage устанавливаемое окно редактирования
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
         Image icon = new Image(getClass().getResourceAsStream("icons/DB.png"));
         dialogStage.getIcons().add(icon);
     }
 
-    // Метод для сохранения изменений
+    /**
+     * Обработчик события нажатия на кнопку "Сохранить":
+     * применяет изменения к абоненту, закрывает окно и обновляет таблицу.
+     * В случае ошибки при проверке — отображает соответствующее сообщение пользователю.
+     */
     @FXML
     private void handleSave(ActionEvent event) {
         try {
-            //todo: Убрать задание базовых по типу Name Surname
 
             // Обновляем объект новыми значениями
             mainController.DB.editSubscriber(selectedSubscriber, text_pn.getText(), text_an.getText(),
@@ -93,6 +117,11 @@ public class editController {
         }
     }
 
+    /**
+     * Инициализирует поля формы данными выбранного абонента.
+     *
+     * @param subscriber объект абонента для редактирования
+     */
     void init(TelSub subscriber) {
         this.selectedSubscriber = subscriber;
 

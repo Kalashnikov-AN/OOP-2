@@ -8,48 +8,65 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/// Класс-контроллер окна добавления новых записей в базу данных
 public class addController {
 
+    /// Кнопка для добавления нового абонента
     @FXML
     private Button save_button;
 
+    /// Поле ввода лицевого счёта
     @FXML
     private TextField text_an;
 
+    /// Поле ввода баланса абонента
     @FXML
     private TextField text_balance;
 
+    /// Поле ввода ФИО абонента
     @FXML
     private TextField text_name;
 
+    /// Поле ввода номера телефона
     @FXML
     private TextField text_pn;
 
+    /// Поле ввода тарифа
     @FXML
     private TextField text_tariff;
 
+    /// Окно диалога добавления нового абонента
     private Stage dialogStage;
 
+    /// Ссылка на главный контроллер
     private mainController mainController; // Ссылка на главный контроллер
 
-    // Метод для установки Stage диалога
+    /**
+     * Устанавливает окно добавления записи
+     * @param dialogStage окно добавления записи
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * Устанавливает главный контроллер и иконку окна
+     * @param mainController контроллер главного окна приложения
+     */
     public void setMainController(mainController mainController) {
         this.mainController = mainController;
         Image icon = new Image(getClass().getResourceAsStream("icons/DB.png"));
         dialogStage.getIcons().add(icon);
     }
 
+    /// Закрывает окно добавления записи в базу данных
     @FXML
     private void closeDialog() {
         dialogStage.close();
     }
 
     @FXML
-    /// Функция добавления записей при нажатии на кнопку "Добавить"
+    /// Обработчик события добавления записи при нажатии на кнопку "Добавить"
     void save_buttonOnClick(ActionEvent event){
         try{
             // Создаём объект телефонного абонента через конструктор с параметрами

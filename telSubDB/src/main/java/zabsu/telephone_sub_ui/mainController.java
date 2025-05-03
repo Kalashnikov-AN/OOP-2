@@ -127,7 +127,10 @@ public class mainController {
     /// Объект класса базы данных
     public TelSubDatabase DB;
 
-
+    /**
+     * Обработчик события открытия окна добавления нового абонента
+     * @throws IOException если не удалось загрузить FXML-файл окна
+     */
     @FXML
     void enterAddWindow(ActionEvent event) throws IOException {
         try{
@@ -161,6 +164,9 @@ public class mainController {
         }
     }
 
+    /**
+     * Обработчик события удаления выбранного абонента из базы данных
+     */
     @FXML
     void onDeleteClick(ActionEvent event) {
         // Получаем выбранный элемент в таблице
@@ -170,6 +176,10 @@ public class mainController {
         DB.deleteSubscriber(selectedSubscriber);
     }
 
+    /**
+     * Обработчик события открытия окна редактирования выбранного абонента
+     * @throws IOException если не удалось загрузить FXML-файл окна
+     */
     @FXML
     void onEditClick(ActionEvent event) throws IOException {
         // Получаем выбранный элемент в таблице
@@ -195,6 +205,9 @@ public class mainController {
         stage.showAndWait(); // Блокирует основное окно
     }
 
+    /**
+     * Обработчик события сохранения текущей базы данных в файл
+     */
 @FXML
 void onSaveFile(ActionEvent event) {
     FileChooser fileChooser = new FileChooser(); // Системный диалог выбора файла
@@ -219,6 +232,9 @@ void onSaveFile(ActionEvent event) {
     }
 }
 
+    /**
+     * Обработчик события загрузки базы данных из выбранного файла
+     */
     @FXML
     void onLoadFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser(); // Системный диалог выбора файла
@@ -245,7 +261,11 @@ void onSaveFile(ActionEvent event) {
         }
     }
 
-    // Вспомогательный метод для показа уведомлений
+    /**
+     * Отображает информационное окно с указанным заголовком и текстом
+     * @param title заголовок окна
+     * @param content текст сообщения
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -257,6 +277,9 @@ void onSaveFile(ActionEvent event) {
         alert.showAndWait();
     }
 
+    /**
+     * Обработчик события поиска среди записей таблицы по введённому запросу и выбранной категории
+     */
     @FXML
     void onSearchClick(ActionEvent event) {
         String query = searchField.getText().toLowerCase(); // поисковый запрос
@@ -290,6 +313,9 @@ void onSaveFile(ActionEvent event) {
         sub_table.setItems(DB.sortedData); // Обновление таблицы после поиска
     }
 
+    /**
+     * Сбрасывает фильтрацию и возвращает исходный список записей таблицы
+     */
     @FXML
     void onResetFilter(ActionEvent event) {
         searchField.clear();
@@ -297,11 +323,17 @@ void onSaveFile(ActionEvent event) {
         sub_table.setItems(DB.data); // возвращаем исходные данные в таблицу
     }
 
+    /**
+     * Обработчик события отображения информации об авторе программы
+     */
     @FXML
     void onAboutAuthorClick(ActionEvent event){
     showAlert("Об авторе", "Автор - Калашников А.Н.");
     }
 
+    /**
+     * Обработчик содытия открытия окна с информацией о программе
+     */
     @FXML
     void onAboutProgramClick(ActionEvent event){
         try{
@@ -329,6 +361,8 @@ void onSaveFile(ActionEvent event) {
             e.printStackTrace();
         }
     }
+
+    /// Инициализация контроллера главного окна
     @FXML
     void initialize() {
         // Связываем столбцы таблицы с соответствующими полями класса

@@ -57,7 +57,7 @@ public class TelSub {
         if (matcher.matches()) { // если введенный номер телефона совпадает с шаблоном
             phone_number = pn;
         } else { // если не совпадает
-            phone_number = "+8(924)000-00-00";
+            // phone_number = "+8(924)000-00-00";
             throw new RuntimeException("Придерживайтесь формата +.(...)...-..-..");
         }
     }
@@ -75,7 +75,7 @@ public class TelSub {
             account_number = an;
         }
         else {
-            account_number = "000001";
+           // account_number = "000001";
             throw new RuntimeException("Придерживайтесь  шестизначного числового формата");
         }
     }
@@ -91,7 +91,7 @@ public class TelSub {
         if (tariffs.contains(tariff1)) {
             this.tariff = tariff1;
         } else {
-            this.tariff = "Based";
+           // this.tariff = "Based";
             throw new RuntimeException("Выберите тариф из списка тарифов");
         }
     }
@@ -111,7 +111,7 @@ public class TelSub {
         if (isNameValid) {
             this.name = name1;
         } else {
-            this.name = "Name Surname";
+            //this.name = "Name Surname";
             throw new RuntimeException("Ошибка: неверно введено ФИО");
         }
     }
