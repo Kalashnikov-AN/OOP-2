@@ -332,7 +332,7 @@ void onSaveFile(ActionEvent event) {
     }
 
     /**
-     * Обработчик содытия открытия окна с информацией о программе
+     * Обработчик события открытия окна с информацией о программе
      */
     @FXML
     void onAboutProgramClick(ActionEvent event){

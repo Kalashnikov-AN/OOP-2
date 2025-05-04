@@ -16,25 +16,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="913.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zabsu.telephone_sub_ui.mainController">
+<!-- Основной корневой элемент интерфейса -->
+<!--
+        Настройки корневого элемента:
+        - max/min: -Infinity - позволяет свободное изменение размеров
+        - pref: фиксированные размеры по умолчанию
+        stylesheets: подключение CSS-стилей
+        fx:controller: указание класса-контроллера
+    -->
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="760.0" prefWidth="913.0" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="zabsu.telephone_sub_ui.mainController">
    <children>
+       <!-- Таблица для отображения данных абонентов -->
       <TableView fx:id="sub_table" layoutX="35.0" layoutY="173.0" prefHeight="447.0" prefWidth="802.0">
+          <!--
+                fx:id: связь с полем sub_table в контроллере
+                layoutX/Y: позиционирование по координатам
+                pref: размеры таблицы
+            -->
         <columns>
+            <!-- Колонка с ФИО -->
           <TableColumn fx:id="table_name" prefWidth="142.39996337890625" text="ФИО" />
+            <!-- Колонка с номером телефона -->
           <TableColumn fx:id="table_pn" minWidth="8.800048828125" prefWidth="128.800048828125" text="Номер " />
+            <!-- Колонка с тарифом -->
             <TableColumn fx:id="table_tariff" prefWidth="88.0" text="Тариф" />
+            <!-- Колонка с балансом -->
             <TableColumn fx:id="table_balance" prefWidth="82.39996337890625" text="Баланс" />
+            <!-- Колонка с лицевым счетом -->
             <TableColumn fx:id="table_an" prefWidth="142.39999389648438" text="Лиц. Счёт" />
         </columns>
       </TableView>
+
+       <!-- Главное меню приложения -->
       <MenuBar fx:id="menuDB" layoutX="14.0" layoutY="14.0">
         <menus>
+            <!-- Меню "Файл"
+             mnemonicParsing - быстрые клавиши(Alt + "Ф" в данном случае)
+             -->
           <Menu mnemonicParsing="false" text="Файл">
             <items>
               <MenuItem fx:id="menuOpen" mnemonicParsing="false" onAction="#onLoadFile" text="Открыть" />
                   <MenuItem fx:id="menuSave" mnemonicParsing="false" onAction="#onSaveFile" text="Сохранить" />
             </items>
           </Menu>
+            <!-- Меню "Инструменты" -->
           <Menu mnemonicParsing="false" text="Инструменты">
             <items>
                   <MenuItem fx:id="menuAdd" mnemonicParsing="false" onAction="#enterAddWindow" text="Добавить" />
@@ -42,6 +70,7 @@
                   <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#onDeleteClick" text="Удалить" />
             </items>
           </Menu>
+            <!-- Меню "Помощь" -->
           <Menu mnemonicParsing="false" text="Помощь">
             <items>
               <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#onAboutProgramClick" text="О программе" />
@@ -50,37 +79,62 @@
           </Menu>
         </menus>
       </MenuBar>
+
+       <!-- Панель инструментов с иконками -->
       <ToolBar layoutX="365.0" layoutY="14.0" prefHeight="51.0" prefWidth="189.0">
         <items>
+            <!-- Кнопка добавления -->
             <Button fx:id="addTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#enterAddWindow" text="">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
+                        <!-- Указание пути к иконке для кнопки-->
                         <Image url="@icons/add.png" />
                     </ImageView>
                 </graphic>
             </Button>
+
+            <!-- Кнопка редактирования -->
             <Button fx:id="editTool" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#onEditClick" text="">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
+                        <!-- Указание пути к иконке для кнопки-->
                         <Image url="@icons/edit.png" />
                     </ImageView>
                 </graphic>
             </Button>
+
+            <!-- Кнопка удаления -->
             <Button fx:id="deleteTool" layoutX="96.0" layoutY="12.0" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="26.0" prefWidth="56.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true">
                      <image>
+                         <!-- Указание пути к иконке для кнопки-->
                         <Image url="@icons/delete.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
         </items>
       </ToolBar>
+
+       <!-- Панель поиска -->
        <HBox alignment="CENTER_LEFT" layoutX="241.0" layoutY="121.0" spacing="10">
+
+           <!--
+               HBox: горизонтальное расположение элементов
+               spacing: расстояние между элементами
+           -->
+           <!-- Поле ввода поискового запроса -->
            <TextField fx:id="searchField" prefWidth="200" promptText="Поиск..." />
+
+           <!-- Выпадающий список категорий поиска-->
            <ComboBox fx:id="searchCategory" promptText="Все поля">
                <items>
+                   <!-- fx:factory - метод создания объекта:
+                    Вызывает метод FXCollections.observableArrayList()
+                    Создает ObservableList<String> - специальную коллекцию для JavaFX
+                    Автоматически обновляет UI при изменениях содержимого -->
                    <FXCollections fx:factory="observableArrayList">
+                       <!-- fx:value - прямое указание значения -->
                        <String fx:value="Все поля" />
                        <String fx:value="ФИО" />
                        <String fx:value="Телефон" />
@@ -90,7 +144,11 @@
                    </FXCollections>
                </items>
            </ComboBox>
+
+           <!-- Кнопка поиска -->
            <Button onAction="#onSearchClick" text="Найти" />
+
+           <!-- Кнопка сброса фильтров -->
            <Button onAction="#onResetFilter" text="Сбросить фильтр" />
        </HBox>
    </children>
