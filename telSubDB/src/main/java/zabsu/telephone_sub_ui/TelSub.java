@@ -1,5 +1,4 @@
-
-
+// Автор: Калашников А.Н.
 package zabsu.telephone_sub_ui;
 import java.util.Arrays;
 import java.util.List;

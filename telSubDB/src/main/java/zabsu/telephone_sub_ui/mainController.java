@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
+// Автор: Калашников А.Н.
 
 /// Класс-контроллер главного окна
 public class mainController {

@@ -1,8 +1,8 @@
 package zabsu.telephone_sub_ui;
-
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+// Автор: Калашников А.Н.
 
 /// Класс-контроллер окна со справкой о программе
 public class aboutProgramController {

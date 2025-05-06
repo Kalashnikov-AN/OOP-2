@@ -1,9 +1,8 @@
 package zabsu.telephone_sub_ui;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+// Автор: Калашников А.Н.
 
 /// Класс, тестирующий методы класса TelSub
 class TelSubTest {

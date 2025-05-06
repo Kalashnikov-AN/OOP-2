@@ -28,9 +28,8 @@
             </Label>
 
             <!-- Основной текст -->
-            <Text text="Версия: 1.0&#10;Автор: Ваша Компания"
-                  styleClass="content-text"
-                  font="$text-font">
+            <Text text="Версия: 1.0&#10;Автор: Калашников А.Н."
+                  styleClass="content-text">
                 <VBox.margin>
                     <Insets left="10"/>
                 </VBox.margin>
@@ -46,7 +45,7 @@
 
             <!-- Контакты -->
             <Text text="Контакты:" styleClass="subheader"/>
-            <Text text="Email: support@company.com&#10;Телефон: +7 (XXX) XXX-XX-XX"
+            <Text text="Github: github.com/Kalashnikov-AN"
                   styleClass="content-text"/>
 
             <!-- Логотип -->

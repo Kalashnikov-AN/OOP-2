@@ -1,5 +1,4 @@
 package zabsu.telephone_sub_ui;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,6 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+// Автор: Калашников А.Н.
 
 /// Класс-контроллер окна добавления новых записей в базу данных
 public class addController {

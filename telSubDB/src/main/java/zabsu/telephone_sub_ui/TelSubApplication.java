@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
+// Автор: Калашников А.Н.
 
 /// Класс приложения TelSubApplication
 public class TelSubApplication extends Application {

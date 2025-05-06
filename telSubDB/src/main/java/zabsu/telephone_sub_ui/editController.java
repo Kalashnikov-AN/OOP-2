@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+// Автор: Калашников А.Н.
 
 /**
  * Контроллер окна редактирования записи абонента.
