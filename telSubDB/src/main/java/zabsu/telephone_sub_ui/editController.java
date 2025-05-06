@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 // Автор: Калашников А.Н.
@@ -40,19 +39,18 @@ public class editController {
     /// Окно диалога редактирования
     private Stage dialogStage;
 
-    /// Ссылка на контроллер главного окна
-    private mainController mainController;
+    /// Ссылка на экземляр модели
+    private TelSubDatabase DB;
 
     /// Поле для хранения редактируемого объекта
     private TelSub selectedSubscriber;
 
     /**
-     * Устанавливает контроллер главного окна.
-     *
-     * @param mainController контроллер главного окна
+     * Устанавливает модель и иконку окна
+     * @param DB экземпляр модели
      */
-    public void setMainController(mainController mainController) {
-        this.mainController = mainController;
+    public void setModel(TelSubDatabase DB) {
+        this.DB = DB;
     }
 
     /**
@@ -76,11 +74,11 @@ public class editController {
         try {
 
             // Обновляем объект новыми значениями
-            mainController.DB.editSubscriber(selectedSubscriber, text_pn.getText(), text_an.getText(),
+            DB.editSubscriber(selectedSubscriber, text_pn.getText(), text_an.getText(),
                     text_name.getText(), text_tariff.getText(), Double.parseDouble(text_balance.getText()));
             // Закрываем окно
             dialogStage.close();
-            mainController.sub_table.refresh();;
+
 
         } catch (Exception ex) {
             // Обработка ошибок валидации

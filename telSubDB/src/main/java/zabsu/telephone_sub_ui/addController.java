@@ -38,8 +38,8 @@ public class addController {
     /// Окно диалога добавления нового абонента
     private Stage dialogStage;
 
-    /// Ссылка на главный контроллер
-    private mainController mainController; // Ссылка на главный контроллер
+    /// Ссылка на экземляр модели
+    private TelSubDatabase DB;
 
     /**
      * Устанавливает окно добавления записи
@@ -50,11 +50,11 @@ public class addController {
     }
 
     /**
-     * Устанавливает главный контроллер и иконку окна
-     * @param mainController контроллер главного окна приложения
+     * Устанавливает модель и иконку окна
+     * @param DB экземпляр модели
      */
-    public void setMainController(mainController mainController) {
-        this.mainController = mainController;
+    public void setModel(TelSubDatabase DB) {
+        this.DB = DB;
         Image icon = new Image(getClass().getResourceAsStream("icons/DB.png"));
         dialogStage.getIcons().add(icon);
     }
@@ -73,7 +73,7 @@ public class addController {
     TelSub sub = new TelSub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
             TableView sub_table = new TableView();
             // Добавляем объект в таблицу
-            mainController.DB.addSubscriber(sub); // Вызываем метод главного контроллера
+            DB.addSubscriber(sub); // Вызываем метод главного контроллера
             closeDialog();
         }
         // Обрабатываем исключительные ситуации

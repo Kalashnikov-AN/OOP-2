@@ -153,7 +153,7 @@ public class mainController {
             // Передача Stage в контроллер добавления записи
             addController controller = loader.getController();
             controller.setDialogStage(dialogStage); // Передаём созданное окно в контроллер добавления записи
-            controller.setMainController(this); // Передаем ссылку на главный контроллер
+            controller.setModel(DB); // Передаем ссылку на экземпляр модели
 
             // Создание сцены и отображение окна
             Scene scene = new Scene(dialogPane);
@@ -194,7 +194,7 @@ public class mainController {
 
         editController controller = loader.getController(); // Создаём контроллер окна редактирования записи
         controller.init(selected); // Передаем выбранный объект
-        controller.setMainController(this); // Передаем ссылку на главный контроллер
+        controller.setModel(DB); // Передаем ссылку на экземпляр модели
 
         Stage stage = new Stage(); // Создание нового окна
         controller.setDialogStage(stage); // Передаём созданное окно в контроллер редактирования записи
@@ -204,6 +204,7 @@ public class mainController {
 
         stage.setScene(new Scene(root));
         stage.showAndWait(); // Блокирует основное окно
+        sub_table.refresh(); // Обновляем таблицу
     }
 
     /**
