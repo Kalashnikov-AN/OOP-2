@@ -5,12 +5,7 @@
 ## 1. Создание JAR-файла в IntelliJ IDEA
 
 ### 1.1. Настройка проекта
-1. Убедитесь, что в `module-info.java` добавлены необходимые модули JavaFX:
-   ```java
-   requires javafx.controls;
-   requires javafx.fxml;
-
-2. Создайте новый главный класс Launcher:
+1. Создайте новый главный класс Launcher:
    ```java
    package zabsu.telephone_sub_ui;
    import javafx.application.Application;
@@ -21,7 +16,7 @@
     }
    }
 
-3. Укажите главный класс в настройках проекта:
+2. Укажите главный класс в настройках проекта:
 
 Перейдите в File -> Project Structure -> Project Settings -> Artifacts
 
