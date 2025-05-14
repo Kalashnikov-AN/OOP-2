@@ -27,9 +27,7 @@
 
 Нажмите + -> JAR -> From modules with dependencies.
 
-Выберите главный класс и укажите:
-
-Directory for META-INF/MANIFEST.MF: src/main/resources
+Выберите главный класс.
 
 Включите опцию Include dependencies (если используются внешние библиотеки).
 
