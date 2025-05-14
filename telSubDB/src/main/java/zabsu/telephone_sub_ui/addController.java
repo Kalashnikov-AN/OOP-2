@@ -71,7 +71,6 @@ public class addController {
         try{
             // Создаём объект телефонного абонента через конструктор с параметрами
     TelSub sub = new TelSub(text_pn.getText(), text_an.getText(), text_tariff.getText(), text_name.getText(), Double.parseDouble(text_balance.getText()));
-            TableView sub_table = new TableView();
             // Добавляем объект в таблицу
             DB.addSubscriber(sub); // Вызываем метод главного контроллера
             closeDialog();
