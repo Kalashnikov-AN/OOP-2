@@ -10,11 +10,22 @@
    requires javafx.controls;
    requires javafx.fxml;
 
-2. Укажите главный класс в настройках проекта:
+2. Создайте новый главный класс Launcher:
+   ```java
+   package zabsu.telephone_sub_ui;
+   import javafx.application.Application;
+   // новый главный класс
+   public class Launcher {
+   public static void main(String[] args){
+        Application.launch(TelSubApplication.class, args);
+    }
+   }
+
+3. Укажите главный класс в настройках проекта:
 
 Перейдите в File -> Project Structure -> Project Settings -> Artifacts
 
-В разделе "Main Class" выберите ваш главный класс.
+В разделе "Main Class" выберите ваш новый главный класс.
 
 ### 1.2. Создание Artifact
 Перейдите в File -> Project Structure -> Artifacts.
