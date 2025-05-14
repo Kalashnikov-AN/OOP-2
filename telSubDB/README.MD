@@ -51,7 +51,7 @@ Directory for META-INF/MANIFEST.MF: src/main/resources
 
 Установите программу, следуя инструкциям мастера.
 
-### 2.2. Написание скрипта установщика
+### 2.2. Создание скрипта установщика
 Запустите Inno Setup и выберите Create a new script file using the Script Wizard
 
 ### 2.3. Компиляция установщика
